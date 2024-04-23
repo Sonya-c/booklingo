@@ -1,0 +1,29 @@
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 7
+      example:
+        email: "email@domain.com"
+        password: "12345678"
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+        accessToken:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
