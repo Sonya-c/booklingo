@@ -1,8 +1,8 @@
 const express = require('express');
-const { checkSchema } = require("express-validator");
 
 const authController = require('../controllers/auth.controller');
 const authValidations = require('../validations/auth.validation');
+const { auth } = require('../middlewares/auth');
 
 const router = express.Router();
 
@@ -19,7 +19,6 @@ router.post(
     authValidations.loginValidate,
     authController.login
 );
-
 
 router.post('/logout', authController.logout);
 
