@@ -15,9 +15,9 @@ const register = async (req, res) => {
 
     const { email, password } = req.body;
     const user = await userService.createUser({ email, password });
-    const token = await jwtService.generateToken(email);
+    const accessToken = await jwtService.generateToken(email);
 
-    return res.status(status.CREATED).send({ user, token });
+    return res.status(status.CREATED).send({ user, accessToken });
 }
 
 const login = async (req, res) => {
@@ -29,14 +29,14 @@ const login = async (req, res) => {
 
     const { email, password } = req.body;
     const user = await authService.login(email, password);
-    const token = await jwtService.generateToken(email);
+    const accessToken = await jwtService.generateToken(email);
 
-    return res.status(status.OK).send({ user, token });
+    return res.status(status.OK).send({ user, accessToken });
 }
 
 const logout = async (req, res) => {
     await authService.logout();
-    res.status(status.OK).json({ "logged": false });
+    res.status(status.NO_CONTENT).send();
 }
 
 module.exports = {
