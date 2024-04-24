@@ -6,6 +6,8 @@ components:
         - email
         - password
       properties:
+        name:
+          type: string
         email:
           type: string
           format: email
@@ -16,6 +18,39 @@ components:
       example:
         email: "email@domain.com"
         password: "12345678"
+    Book:
+      type: object
+      required:
+        - id
+        - genere
+        - publishDate
+        - editorial
+        - author
+        - title
+      properties:
+        id:
+          type: string
+        genere:
+          type: string
+        publishDate:
+          type: string
+          format: date
+        editorial:
+          type: string
+        author:
+          type: string
+        title:
+          type: string
+      Order:
+        type: object
+        id:
+          type: string
+        creationDate:
+          type: string
+          format: date
+        status:
+          type: string
+          enum: ["inProgress", "done", "canceled"]
     AuthResponse:
       type: object
       properties:

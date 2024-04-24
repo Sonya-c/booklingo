@@ -61,3 +61,36 @@ paths:
           description: Unauthorized
         403:
           description: Forbiden
+
+  /user:
+    patch:
+      summary: UPDATE an user
+      tags: [User]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "User object to update"
+          required: true
+          schema:
+            $ref: "#/components/schemas/User"
+  /user/{userId}:
+    get:
+      summary: READ Get an user by id
+      tags: [User]
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "ID of pet to update"
+          required: true
+    delete:
+      summary: DELETE an user by id
+      tags: [User]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "ID of pet to update"
+          required: true
