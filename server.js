@@ -1,8 +1,12 @@
 require('dotenv').config();
 
+const mongoose = require('./config/connection');
 const app = require("./app");
 
 const PORT = process.env.PORT || 5000;
+
+// Open mongo connection 
+mongoose.connect();
 
 app.listen(PORT, () => {
     const hyperLink = (text, link) => `\x1b]8;;${link}\x1b\\${text}\x1b[0m\x1b]8;;\x1b\\`;
