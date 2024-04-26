@@ -1,5 +1,4 @@
 const express = require('express');
-const status = require('http-status');
 
 const userController = require('../controllers/user.controller');
 const { auth } = require('../middlewares/auth');

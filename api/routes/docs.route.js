@@ -1,6 +1,4 @@
 const express = require('express');
-const status = require('http-status');
-
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
