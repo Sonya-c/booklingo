@@ -22,8 +22,7 @@ const register = async (req, res) => {
 
         return res.status(status.CREATED).send({ user, accessToken });
     } catch (error) {
-        // Multiple users should be conclit 
-        return res.status(status.INTERNAL_SERVER_ERROR).send({ "Error": error.message })
+        return res.status(error.status || status.INTERNAL_SERVER_ERROR).send({ "Error": error.message,  "Stack": error.stack })
     }
 }
 
@@ -42,20 +41,11 @@ const login = async (req, res) => {
 
         return res.status(status.OK).send({ user, accessToken });
     } catch (error) {
-        // 404 if user don't exist
-        // unauthorize if password dosent match 
-
-        return res.status(status.INTERNAL_SERVER_ERROR).send({ "Error": error.message })
+        return res.status(error.status || status.INTERNAL_SERVER_ERROR).send({ "Error": error.message, "Stack": error.stack })
     }
-}
-
-const logout = async (req, res) => {
-    await authService.logout();
-    res.status(status.NO_CONTENT).send();
 }
 
 module.exports = {
     register,
     login,
-    logout
 };

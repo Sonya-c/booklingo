@@ -1,26 +1,24 @@
 const bcrypt = require('bcrypt');
+
+const AppError = require('../utils/AppError');
+const status = require('http-status');
 const userService = require('./user.service');
 
 const login = async (email, password) => {
     const user = await userService.findUserbyEmail(email);
 
     if (!user) {
-        // Should be 404
-        throw new Error(`User with email '${email}' dosen't exists`);
+        throw new AppError(`User with email '${email}' dosen't exists`, status.NOT_FOUND);
     }
 
     if (bcrypt.compareSync(password, user.password)) {
         return user;
     } else {
-        // unauthorize
-        throw new Error(`Wrong password`);
+        throw new AppError(`Wrong password`, status.UNAUTHORIZED);
     }
 }
 
-const logout = async () => { }
-
 
 module.exports = {
-    login,
-    logout
+    login
 };

@@ -1,5 +1,5 @@
 
-class ApplicationError extends Error {
+class AppError extends Error {
     constructor(message, status) {
         super();
 
@@ -12,4 +12,4 @@ class ApplicationError extends Error {
     }
 }
 
-module.exorts = ApplicationError;
+module.exports = AppError;

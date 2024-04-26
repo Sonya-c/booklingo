@@ -1,10 +1,12 @@
 const User = require('../models/user.model');
 
+const AppError = require('../utils/AppError');
+const status = require('http-status');
 
 const createUser = async (userData) => {
     const users = await findUserbyEmail(userData.email);
 
-    if (users != null) throw new Error(`User with email '${userData.email}' already exists`);
+    if (users != null) throw new AppError(`User with email '${userData.email}' already exists`, status.CONFLICT);
 
     return await User.create(userData);
 }
