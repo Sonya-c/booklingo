@@ -1,5 +1,6 @@
 
 const { validationResult } = require("express-validator");
+
 const status = require('http-status');
 
 const userService = require('../services/user.service');
@@ -14,10 +15,16 @@ const register = async (req, res) => {
     }
 
     const { email, password } = req.body;
-    const user = await userService.createUser({ email, password });
-    const accessToken = await jwtService.generateToken(email);
 
-    return res.status(status.CREATED).send({ user, accessToken });
+    try {
+        const user = await userService.createUser({ email, password });
+        const accessToken = await jwtService.generateToken(email);
+
+        return res.status(status.CREATED).send({ user, accessToken });
+    } catch (error) {
+        // Multiple users should be conclit 
+        return res.status(status.INTERNAL_SERVER_ERROR).send({ "Error": error.message })
+    }
 }
 
 const login = async (req, res) => {
@@ -28,10 +35,18 @@ const login = async (req, res) => {
     }
 
     const { email, password } = req.body;
-    const user = await authService.login(email, password);
-    const accessToken = await jwtService.generateToken(email);
 
-    return res.status(status.OK).send({ user, accessToken });
+    try {
+        const user = await authService.login(email, password);
+        const accessToken = await jwtService.generateToken(email);
+
+        return res.status(status.OK).send({ user, accessToken });
+    } catch (error) {
+        // 404 if user don't exist
+        // unauthorize if password dosent match 
+
+        return res.status(status.INTERNAL_SERVER_ERROR).send({ "Error": error.message })
+    }
 }
 
 const logout = async (req, res) => {

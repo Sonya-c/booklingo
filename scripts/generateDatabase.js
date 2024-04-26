@@ -1,23 +1,29 @@
 require('dotenv').config();
-
 const mongoose = require('../config/connection');
-const User = require('../api/models/user.model');
+const userService = require('../api/services/user.service');
+const authService = require('../api/services/auth.service');
 
 mongoose.connect()
     .then(async () => {
-        
-        const testUser = {
-            email: "email@domain.com",
-            password: "123456789"
-        };
 
-        try {
-            const user = await User.create(testUser);
-            console.log(user);
-        } catch (error) {
-            console.log(error);
+        const user = {
+            email: "email@domain.com",
+            password: "MyAmazingPassword"
         }
 
-        process.exit(1);
-    })
-    
+        // const { email, password } = user;
+
+        // const salt = await bcrypt.genSaltSync(saltRounds);
+        // const hash = await bcrypt.hashSync(password, salt);
+
+        // const newUser = { email, salt, password: hash };
+        // console.log(newUser);
+
+        // try {
+        //     const newUser = await userService.createUser(user);
+        //     console.log(newUser);
+        // } catch (Error) {
+        //     console.log(Error.message)
+        // }
+
+    });
