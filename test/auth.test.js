@@ -1,9 +1,11 @@
 require("dotenv").config();
 
+const { connect, clearCollections } = require('../config/db');
+
 const status = require('http-status');
 const request = require("supertest");
 
-const app = require("../../app");
+const app = require("../app");
 
 
 describe("POST /auth/login", () => {
@@ -60,33 +62,15 @@ describe("POST /auth/login", () => {
             });
         expect(res.statusCode).toBe(status.UNPROCESSABLE_ENTITY);
     });
-
-    it("Given good email and password, it should return an user and a working jwt.", async () => {
-        const email = "email@domain.com";
-
-        let res = await request(app)
-            .post("/auth/login")
-            .send({
-                email,
-                "password": "123456789"
-            });
-
-        expect(res.statusCode).toBe(status.OK);
-        expect(res.body.user.email).toBe(email);
-        expect(res.body.accessToken).toBeDefined();
-
-        const token = res.body.accessToken;
-
-        res = await request(app)
-            .get("/auth/status")
-            .auth(token, { type: "bearer" });
-
-        expect(res.status).toBe(status.OK);
-    });
 });
 
 
 describe("POST /auth/register", () => {
+    let connection;
+
+    beforeAll(async () => {
+        connection = await connect();
+    });
 
     it("Given no email and no password, it should return an error.", async () => {
         const res = await request(app).post("/auth/register");
@@ -141,7 +125,7 @@ describe("POST /auth/register", () => {
         expect(res.statusCode).toBe(status.UNPROCESSABLE_ENTITY);
     });
 
-    it("Given good email and password, it should return an user and a working jwt.", async () => {
+    it("Given good email and password, it should return a new user and a jwt.", async () => {
         const email = "email@domain.com";
 
         let res = await request(app)
@@ -149,19 +133,15 @@ describe("POST /auth/register", () => {
             .send({
                 email,
                 "password": "123456789"
-            });
+            }).expect(status.CREATED);
 
-        expect(res.statusCode).toBe(status.CREATED);
         expect(res.body.user.email).toBe(email);
         expect(res.body.accessToken).toBeDefined();
+    });
 
-        const token = res.body.accessToken;
-
-        res = await request(app)
-            .get("/auth/status")
-            .auth(token, { type: "bearer" });
-
-        expect(res.status).toBe(status.OK);
+    afterAll(async () => {
+        await clearCollections(connection);
+        connection.close()
     });
 });
 

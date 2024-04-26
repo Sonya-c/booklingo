@@ -3,6 +3,8 @@ const mongoose = require('../config/connection');
 const userService = require('../api/services/user.service');
 const authService = require('../api/services/auth.service');
 
+process.env.MONGO_DB = "test";
+
 mongoose.connect()
     .then(async () => {
 
@@ -24,6 +26,8 @@ mongoose.connect()
         //     console.log(newUser);
         // } catch (Error) {
         //     console.log(Error.message)
-        // }
+        // }  
+
+        process.exit(1);
 
     });
