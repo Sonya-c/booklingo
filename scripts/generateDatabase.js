@@ -1,5 +1,5 @@
 require('dotenv').config();
-const mongoose = require('../config/connection');
+const mongoose = require('../config/db');
 const userService = require('../api/services/user.service');
 const authService = require('../api/services/auth.service');
 
@@ -9,7 +9,7 @@ mongoose.connect()
     .then(async () => {
 
         const user = {
-            email: "email@domain.com",
+            email: "email.com",
             password: "MyAmazingPassword"
         }
 
@@ -21,12 +21,12 @@ mongoose.connect()
         // const newUser = { email, salt, password: hash };
         // console.log(newUser);
 
-        // try {
-        //     const newUser = await userService.createUser(user);
-        //     console.log(newUser);
-        // } catch (Error) {
-        //     console.log(Error.message)
-        // }  
+        try {
+            const newUser = await userService.createUser(user);
+            console.log(newUser);
+        } catch (Error) {
+            console.log(Error.message)
+        }
 
         process.exit(1);
 
