@@ -4,14 +4,19 @@ const status = require('http-status');
 
 const userService = require('../services/user.service');
 
+
 const findUserbyId = async (req, res) => {
-    userService.findUserbyId();
-    res.status(status.OK).send();
+    const { userId } = req.params; 
+
+    const user = await userService.findUserbyId(userId);
+    res.status(status.OK).send(user);
 }
 
-const updateUser = async (req, res) => {
-    userService.updateUser();
-    res.status(status.OK).send();
+const updateUserById = async (req, res) => {
+    const { userId } = req.params; 
+    
+    const user = await userService.updateUserById(userId, req.body);
+    res.status(status.OK).send(user);
 }
 
 const deleteUser = async (req, res) => {
@@ -21,6 +26,6 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
     findUserbyId,
-    updateUser,
+    updateUserById,
     deleteUser
 };

@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/:userId', userController.findUserbyId);
 
-router.patch('/', auth, userController.updateUser);
+router.patch('/:userId', auth, userController.updateUserById);
 
 router.delete('/:userId', auth, userController.deleteUser);
 
