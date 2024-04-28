@@ -8,7 +8,7 @@ const connect = async () => {
     // console.log(uri + "/" + db);
 
     mongoose.connect(uri + "/" + db)
-        .then(() => {
+        .then(async () => {
             console.log('Mongo connection success');
         })
         .catch(error => {
