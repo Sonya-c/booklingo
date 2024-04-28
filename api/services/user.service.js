@@ -7,36 +7,52 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
 
 const createUser = async (userData) => {
-    const users = await findUserbyEmail(userData.email);
+    const user = await findUserbyEmail(userData.email);
 
-    if (users != null) throw new AppError(`User with email '${userData.email}' already exists`, status.CONFLICT);
+    if (user != null)
+        throw new AppError(`User with email '${userData.email}' already exists`, status.CONFLICT);
 
     userData.password = bcrypt.hashSync(userData.password, SALT_ROUNDS);
-
     return await User.create(userData);
 }
 
 
 const findUserbyEmail = async (email) => {
-    return await User.findOne({ email });
+    const user = await User.findOne({ email });
+
+    if (user != null && !user.isDeleted) return user;
 }
 
 const findUserbyId = async (userId) => {
-    return await User.findById(userId);
+    const user = await User.findById(userId);
+
+    if (user != null && !user.isDeleted) return user;
 }
 
 const updateUserById = async (userId, userData) => {
-    if (await findUserbyEmail(userData.email) != null) throw new AppError(`User with email '${userData.email}' already exists`, status.CONFLICT);
 
-    if (userData['password'])
+    if (await findUserbyId(userId) == null) // Check if user exist 
+        throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
+
+    if ("email" in userData) { // check if email will change and if email is avilable
+        const user = await findUserbyEmail(userData.email);
+        if (user != null && user._id != userId)
+            throw new AppError(`User with email '${userData.email}' already exists`, status.CONFLICT);
+    }
+
+    if ('password' in userData) // check if passwords will change and hash it 
         userData.password = bcrypt.hashSync(userData.password, SALT_ROUNDS);
-
-    // if (await findUserbyId(userId) == null) throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
 
     return await User.findByIdAndUpdate(userId, userData);
 }
 
-const deleteUser = async (id) => { }
+const deleteUser = async (userId) => {
+
+    if (await findUserbyId(userId) == null) // Check if user exist 
+        throw new AppError(`User with userId '${userId}' dosen't exists`, status.NOT_FOUND);
+
+    return await User.findByIdAndUpdate(userId, { "isDeleted": true });
+}
 
 module.exports = {
     createUser,

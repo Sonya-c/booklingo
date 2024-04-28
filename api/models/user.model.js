@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
         minlength: 6,
         maxlength: 128,
     },
-});
-
+    isDeleted: {
+        type: Boolean,
+        required: true,
+        default: false,
+    }
+}, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

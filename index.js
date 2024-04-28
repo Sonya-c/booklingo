@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const status = require('http-status');
 const cors = require('cors');
 const express = require("express");
 
@@ -27,6 +28,13 @@ app.options('*', cors());
 // routes 
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
+
+// Error handeling
+app.use((error, req, res, next) => {
+    return res
+        .status(error.status || status.INTERNAL_SERVER_ERROR)
+        .send({ "Error": error.message, "Stack": error.stack })
+});
 
 app.listen(PORT, () => {
     const hyperLink = (text, link) => `\x1b]8;;${link}\x1b\\${text}\x1b[0m\x1b]8;;\x1b\\`;
