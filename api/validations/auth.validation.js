@@ -1,7 +1,7 @@
 
-const { body } = require("express-validator");
+const { body, checkExact } = require("express-validator");
 
-const loginValidate = [
+const login = [
     body("email")
         .exists().withMessage("Email is required")
         .isEmail().withMessage("Provide valid email"),
@@ -9,10 +9,13 @@ const loginValidate = [
         .exists().withMessage("Password is required")
         .isString().withMessage("Password should be string")
         .isLength({ min: 7 }).withMessage("Password should be at least 7 characters"),
+    checkExact([], { message: 'Too many fields specified' })
 ];
 
 
-const registerValidate = [
+const register = [
+    body("name")
+        .isString().optional({ nullable: true }),
     body("email")
         .exists().withMessage("Email is required")
         .isEmail().withMessage("Provide valid email"),
@@ -20,9 +23,10 @@ const registerValidate = [
         .exists().withMessage("Password is required")
         .isString().withMessage("Password should be string")
         .isLength({ min: 7 }).withMessage("Password should be at least 7 characters"),
+    checkExact([], { message: 'Too many fields specified' })
 ]
 
 module.exports = {
-    loginValidate,
-    registerValidate
+    login,
+    register
 }

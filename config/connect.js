@@ -18,14 +18,4 @@ const connect = async () => {
     return mongoose.connection;
 }
 
-const clearCollections = async (connection) => {
-    const collections = connection.collections;
-    for (const key in collections) {
-        const collection = collections[key];
-        await collection.deleteMany({});
-    }
-}
-module.exports = {
-    connect,
-    clearCollections
-}
+module.exports = connect;

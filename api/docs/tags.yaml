@@ -1,9 +1,0 @@
-tags:
-  - name: "Auth"
-    description: "Authentication and authorization. "
-  - name: "User"
-    description: "User data managment"
-  - name: "Book"
-    description: "Book data managment"
-  - name: "Order"
-    description: "Order managment"

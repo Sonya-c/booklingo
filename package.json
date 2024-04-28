@@ -2,10 +2,10 @@
   "name": "booklingo",
   "version": "1.0.0",
   "description": "Servicio de e-commerce de libros para la venta y compra de libros usados",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "cross-env NODE_ENV=test MONGO_DB=test jest --detectOpenHandles"
   },
   "author": "sonya-c",
@@ -18,11 +18,9 @@
     "express": "^4.19.2",
     "express-validator": "^7.0.1",
     "http-status": "^1.7.4",
-    "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.2",
     "nodemon": "^3.1.0",
-    "supertest": "^6.3.4",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "validator": "^13.11.0"
