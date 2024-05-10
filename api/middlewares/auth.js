@@ -12,9 +12,10 @@ const auth = async (req, res, next) => {
 
     jwt.verify(token, SECRET, (err, decodeToken) => {
 
-        if (err || decodeToken.userId != req.params.userId) return res.sendStatus(status.FORBIDDEN); // Token expire or not matching user, return error 
+        if (err) return res.sendStatus(status.FORBIDDEN); // Token expire or not matching user, return error 
 
         req.decodeToken = decodeToken;
+
         next(); // it's logged, continua 
     });
 }

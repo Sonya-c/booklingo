@@ -9,18 +9,18 @@ const register = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await userService.createUser({ email, password });
-    const accessToken = await jwtService.generateToken(user._id);
+    const authToken = await jwtService.generateToken(user._id);
 
-    return res.status(status.CREATED).send({ user, accessToken });
+    return res.status(status.CREATED).send({ user, authToken });
 }
 
 const login = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await authService.login(email, password);
-    const accessToken = await jwtService.generateToken(user._id);
+    const authToken = await jwtService.generateToken(user._id);
 
-    return res.status(status.OK).send({ user, accessToken });
+    return res.status(status.OK).send({ user, authToken });
 }
 
 module.exports = { register, login, };

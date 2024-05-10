@@ -9,26 +9,30 @@ const catchError = require('../utils/catchError');
 
 const router = express.Router();
 
+// Search user by ID
 router.get(
     '/:userId',
     [userValidation.userId, validate],
     catchError(userController.findUserbyId)
 );
 
+// Search user by Email
 router.get(
     '/email/:userEmail',
     catchError(userController.findUserbyEmail)
 );
 
+// Update user (auth requried)
 router.patch(
-    '/:userId',
-    [userValidation.userId, userValidation.update, validate, catchError(auth)],
+    '/',
+    [userValidation.update, validate, catchError(auth)],
     catchError(userController.updateUserById)
 );
 
+// Delete user (auth requried)
 router.delete(
-    '/:userId',
-    [userValidation.userId, validate, catchError(auth)],
+    '/',
+    [validate, catchError(auth)],
     catchError(userController.deleteUser)
 );
 

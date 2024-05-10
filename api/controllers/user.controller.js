@@ -28,13 +28,14 @@ const findUserbyId = async (req, res) => {
 }
 
 const updateUserById = async (req, res) => {
-    const { userId } = req.params;
+    const { userId } = req.decodeToken;
+
     const user = await userService.updateUserById(userId, req.body);
     res.status(status.OK).send(user);
 }
 
 const deleteUser = async (req, res) => {
-    const { userId } = req.params;
+    const { userId } = req.decodeToken;
     const user = await userService.deleteUser(userId);
     res.status(status.OK).send(user);
 }
