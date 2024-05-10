@@ -6,13 +6,14 @@ const bookService = require('../services/book.service');
 
 
 const findBook = async (req, res) => {
-    // Extract author, editorial, genere, pubDate and title
-    const { title, pubDate, genere, editorial, author } = req.query;
+    // Extract author, editorial, genre, pubDate and title
+    const { title, startPubDate, endPubDate, genre, editorial, author } = req.query;
 
     const books = await bookService.findBook(
         title,
-        pubDate,
-        genere,
+        startPubDate,
+        endPubDate,
+        genre,
         editorial,
         author
     );

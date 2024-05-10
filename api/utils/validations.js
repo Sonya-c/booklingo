@@ -1,5 +1,5 @@
 
-const { param, body, checkExact } = require("express-validator");
+const { param, body, query, checkExact } = require("express-validator");
 
 const authValidations = {
     "register": [
@@ -50,6 +50,25 @@ const bookValidation = {
             .isMongoId()
             .withMessage("bookId is not a valid ID")
     ],
+    "findBook": [
+        query("title")
+            .isString()
+            .isString().optional({ nullable: true }),
+        query("startPubDate")
+            .optional({ nullable: true }),
+        query("endPubDate")
+            .optional({ nullable: true }),
+        query("genre")
+            .isString()
+            .isString().optional({ nullable: true }),
+        query("editorial")
+            .isString()
+            .isString().optional({ nullable: true }),
+        query("author")
+            .isString()
+            .isString().optional({ nullable: true }),
+        checkExact([], { message: 'Too many fields specified' })
+    ],
     "createBook": [
         body("title")
             .isString()
@@ -57,9 +76,9 @@ const bookValidation = {
         body("pubDate")
             .isString()
             .exists().withMessage("pubDate is required"),
-        body("genere")
+        body("genre")
             .isString()
-            .exists().withMessage("genere is required"),
+            .exists().withMessage("genre is required"),
         body("editorial")
             .isString()
             .exists().withMessage("editorial is required"),
@@ -75,7 +94,7 @@ const bookValidation = {
         body("pubDate")
             .isString()
             .optional({ nullable: true }),
-        body("genere")
+        body("genre")
             .isString()
             .optional({ nullable: true }),
         body("editorial")

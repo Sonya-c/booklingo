@@ -11,7 +11,9 @@ const router = express.Router();
 
 // Get all books
 // Filters 
-router.get("/", catchError(bookController.findBook));
+router.get("/", [bookValidation.findBook, validate],
+    catchError(bookController.findBook)
+);
 
 // Get a book by id 
 router.get("/:bookId",
