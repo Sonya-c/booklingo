@@ -6,6 +6,8 @@ const express = require("express");
 
 const authRoute = require("./api/routes/auth.route");
 const userRoute = require("./api/routes/user.route");
+const bookRoute = require("./api/routes/book.route");
+
 const connect = require('./config/connect');
 
 const PORT = process.env.PORT || 5000;
@@ -28,6 +30,8 @@ app.options('*', cors());
 // routes 
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
+app.use('/book', bookRoute);
+
 
 // Error handeling
 app.use((error, req, res, next) => {

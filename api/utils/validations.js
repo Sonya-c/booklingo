@@ -44,7 +44,52 @@ const userValidation = {
     ]
 };
 
+const bookValidation = {
+    "bookId": [
+        param("bookId")
+            .isMongoId()
+            .withMessage("bookId is not a valid ID")
+    ],
+    "createBook": [
+        body("title")
+            .isString()
+            .exists().withMessage("Title is required"),
+        body("pubDate")
+            .isString()
+            .exists().withMessage("pubDate is required"),
+        body("genere")
+            .isString()
+            .exists().withMessage("genere is required"),
+        body("editorial")
+            .isString()
+            .exists().withMessage("editorial is required"),
+        body("author")
+            .isString()
+            .exists().withMessage("author is required"),
+        checkExact([], { message: 'Too many fields specified' })
+    ],
+    "updateBook": [
+        body("title")
+            .isString()
+            .optional({ nullable: true }),
+        body("pubDate")
+            .isString()
+            .optional({ nullable: true }),
+        body("genere")
+            .isString()
+            .optional({ nullable: true }),
+        body("editorial")
+            .isString()
+            .optional({ nullable: true }),
+        body("author")
+            .isString()
+            .optional({ nullable: true }),
+        checkExact([], { message: 'Too many fields specified' })
+    ]
+}
+
 module.exports = {
     authValidations,
-    userValidation
+    userValidation,
+    bookValidation
 }

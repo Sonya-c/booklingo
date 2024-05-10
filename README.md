@@ -17,10 +17,10 @@ Servicio de e-commerce de libros para la venta y compra de libros usados
     - [ ] Order
 - [ ] Read
     - [x] Get one user (by Id)
-    - [x] Get many users
+    - [ ] Get many users
     
     - [ ] Get one book (by Id)
-    - [ ] Get many books (filter by genere, pubDate, editorial, auth, name)
+    - [ ] Get many books (filter by genere, pubDate, editorial, auth, title)
 
     - [ ] Get one order (by Id)
     - [ ] Get many orders (creationDate (range), state (progress, complete, canceled))
