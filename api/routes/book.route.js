@@ -9,13 +9,12 @@ const catchError = require('../utils/catchError');
 
 const router = express.Router();
 
-// Get all books
-// Filters 
+// Get all users. Optional filters: genre, pubDate (range), editorial, author adn title 
 router.get("/", [bookValidation.findBook, validate],
     catchError(bookController.findBook)
 );
 
-// Get a book by id 
+// Get one book by id 
 router.get("/:bookId",
     [bookValidation.bookId, validate],
     catchError(bookController.findBookById)
@@ -34,13 +33,13 @@ router.post("/",
     catchError(bookController.createBook)
 );
 
-// Update a book (auth required)
+// Update one book by id (auth required)
 router.patch("/:bookId",
     [bookValidation.bookId, bookValidation.updateBook, validate, catchError(auth)],
     catchError(bookController.updateBookById)
 );
 
-// Delete a book
+// Delete one book by id (auth required)
 router.delete("/:bookId",
     [bookValidation.bookId, validate, catchError(auth)],
     catchError(bookController.deleteBookById)

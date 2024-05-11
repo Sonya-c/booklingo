@@ -7,13 +7,14 @@ const catchError = require('../utils/catchError');
 
 const router = express.Router();
 
+// Create a new user
 router.post(
     '/register',
     [authValidations.register, validate],
     catchError(authController.register)
 );
 
-
+// Login a user
 router.post(
     '/login',
     [authValidations.login, validate],

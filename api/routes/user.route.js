@@ -12,27 +12,21 @@ const router = express.Router();
 // Get all users 
 router.get("/", catchError(userController.getAllUsers));
 
-// Search user by ID
+// Get one user by id
 router.get(
     '/:userId',
     [userValidation.userId, validate],
     catchError(userController.findUserbyId)
 );
 
-// Search user by Email
-router.get(
-    '/email/:userEmail',
-    catchError(userController.findUserbyEmail)
-);
-
-// Update user (auth requried)
+// Update one user by id (auth required)
 router.patch(
     '/',
     [userValidation.update, validate, catchError(auth)],
     catchError(userController.updateUserById)
 );
 
-// Delete user (auth requried)
+// Delete one user by id (auth required)
 router.delete(
     '/',
     [validate, catchError(auth)],
