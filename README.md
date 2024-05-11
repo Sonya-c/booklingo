@@ -4,6 +4,11 @@ Book e-commerce service for the sale and purchase of used books.
 
 ## Getting Started
 
+**Dependencies**
+
+- Node v20.11.0 (or latest)
+- npm v10.2.4 (or latest)
+
 **Instalation**
 
 1. Clone the repo 
@@ -28,7 +33,13 @@ Book e-commerce service for the sale and purchase of used books.
 
     You can create the `JWT_SECRET` using [createSecret.js](./scripts/createSecret.js) script.
 
-4. Now you can use the api on the localhost!
+**Executing programm**
+
+```
+npm run start
+```
+
+Now you can use the api on the localhost!
 
 ## Endpoints 
 
@@ -82,14 +93,26 @@ Book e-commerce service for the sale and purchase of used books.
     - [x] Update a book by id.
     - [x] Delete a book by id.
 
-- [] Orders.
-    - [] Create an order.
-    - [] Update an order (stauts, check auth).
-    - [] Delete an oder.
-    - [] Get all order.
-    - [] Get order by id.
+- [ ] Orders.
+    - [ ] Create an order.
+    - [ ] Update an order (stauts, check auth).
+    - [ ] Delete an oder.
+    - [ ] Get all order.
+    - [ ] Get order by id.
 
 - Other/Not sure.
-    - [] Extra query: show deleted items.
-    - [] When getting a order, and extra query for send order and recived orders.
-    - [] When getting the books of a user, it should be on book route or user route?
+    - [ ] Extra query: show deleted items.
+    - [ ] When getting a order, and extra query for send order and recived orders.
+    - [ ] When getting the books of a user, it should be on book route or user route?
+
+## Authors
+
+- Sonya Castro @sonya-c
+    - sonyac@uninorte.edu.co
+    - sonya.castro.gomez@gmail.com
+
+<!-- ## Acknowledgments
+
+Inspiration:
+
+- [RESTful API Node Server Boilerplate](https://github.com/hagopj13/node-express-boilerplate/tree/master) -->
