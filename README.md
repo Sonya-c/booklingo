@@ -125,7 +125,38 @@ node .\scripts\generateDatabase.js
         | 422  | Bad request data |
 
     - `PATCH /users/:userId` - Update one user by id (auth required).
+
+        Parameters
+
+        | Name        | Type             | Description               |
+        |-------------|------------------|---------------------------|
+        | authToken      | header (required)  | Auth token        |
+        
+
+        Response
+
+        | Code | Description             |     
+        |------|-------------------------|
+        | 200  | User Object |
+        | 404  | User not found | 
+        | 401  | Unauthorized (no token) |
+        | 403  | Forbiden |
+
     - `DELETE /users/:userId` - Delete one user by id (auth required).
+
+        | Name        | Type             | Description               |
+        |-------------|------------------|---------------------------|
+        | authToken      | header (required)  | Auth token        |
+        
+
+        Response
+
+        | Code | Description             |     
+        |------|-------------------------|
+        | 200  | User Object |
+        | 404  | User not found | 
+        | 401  | Unauthorized (no token) |
+        | 403  | Forbiden |
 
 - **Books:**
     - `GET /books` - Get all users. Optional filters: genre, pubDate (range), editorial, author adn title.
