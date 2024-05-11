@@ -4,9 +4,9 @@
   "description": "Servicio de e-commerce de libros para la venta y compra de libros usados",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "cross-env NODE_ENV=Test MONGO_DB=test nodemon index.js",
     "start": "node index.js",
-    "test": "cross-env NODE_ENV=test MONGO_DB=test jest --detectOpenHandles"
+    "test": "cross-env NODE_ENV=Test MONGO_DB=test jest --detectOpenHandles"
   },
   "author": "sonya-c",
   "license": "ISC",
@@ -24,5 +24,8 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1"
   }
 }

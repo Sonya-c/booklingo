@@ -28,10 +28,14 @@ Book e-commerce service for the sale and purchase of used books.
     JWT_SECRET=
     JWT_ACCESS_EXPIRE=60 # This is on minutes
     MONGO_URI= 
-    MONGO_DB= # prod, test
+    MONGO_DB= # Prod or Test
     ```
 
     You can create the `JWT_SECRET` using [createSecret.js](./scripts/createSecret.js) script.
+
+    ```
+    node .\scripts\createSecret.js
+    ```
 
 **Executing programm**
 
@@ -41,6 +45,17 @@ npm run start
 
 Now you can use the api on the localhost!
 
+## Mock data
+
+The script [generateDatabase.js](./scripts/generateDatabase.js) creates random users and books and saves the data as a JSON on the data folder.
+It also saves the plainPassword.
+
+```
+node .\scripts\generateDatabase.js
+```
+
+**This data is just for testing purposes so it's saved in the test db. Never in production**.
+ 
 ## Endpoints 
 
 - **Authentication:**
