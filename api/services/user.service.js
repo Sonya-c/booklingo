@@ -20,13 +20,13 @@ const createUser = async (userData) => {
 const findUserbyEmail = async (email) => {
     const user = await User.findOne({ email });
 
-    if (user != null && !user.isDeleted) return user;
+    if (user != null && !user?.isDeleted) return user;
 }
 
 const findUserbyId = async (userId) => {
     const user = await User.findById(userId);
 
-    if (user != null && !user.isDeleted) return user;
+    if (user != null && !user?.isDeleted) return user;
 }
 
 const updateUserById = async (userId, userData) => {

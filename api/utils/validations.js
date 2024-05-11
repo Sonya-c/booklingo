@@ -55,9 +55,9 @@ const bookValidation = {
             .isString()
             .isString().optional({ nullable: true }),
         query("startPubDate")
-            .optional({ nullable: true }),
+            .toDate().optional({ nullable: true }),
         query("endPubDate")
-            .optional({ nullable: true }),
+            .toDate().optional({ nullable: true }),
         query("genre")
             .isString()
             .isString().optional({ nullable: true }),

@@ -16,20 +16,18 @@ const findBook = async (
 ) => {
 
     console.log(startPubDate, endPubDate);
-    console.log(new Date(startPubDate).toISOString(), new Date(endPubDate).toISOString());
 
-
-    const filter = {};
+    const filter = { isDeleted: false };
 
     if (startPubDate && endPubDate) {
-        filter.publishDate = {
-            $gte: new Date(startPubDate).toISOString(),
-            $lte: new Date(endPubDate).toISOString()
+        filter.pubDate = {
+            $gte: startPubDate,
+            $lte: endPubDate
         };
     } else if (startPubDate) {
-        filter.publishDate = { $gte: new Date(startPubDate).toISOString() };
+        filter.pubDate = { $gte: startPubDate };
     } else if (endPubDate) {
-        filter.publishDate = { $lte: new Date(endPubDate).toISOString() };
+        filter.pubDate = { $lte: endPubDate };
     }
 
     if (title) filter.title = { $regex: new RegExp(title, "i") };
@@ -48,13 +46,13 @@ const findBook = async (
 const findBookById = async (bookId) => {
     const book = await Book.findById(bookId);
 
-    if (book != null && !book.isDeleted) return book;
+    if (book != null && !book?.isDeleted) return book;
 }
 
 const createBook = async (userId, bookData) => {
     const user = await userService.findUserbyId(userId);
 
-    if (user == null)
+    if (user == null && !user?.isDeleted)
         throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
 
     const book = await Book.create({
@@ -64,12 +62,33 @@ const createBook = async (userId, bookData) => {
     return book;
 }
 
-const updateBook = async (bookData) => {
-    return bookData;
+const updateBook = async (bookId, userId, bookData) => {
+    const book = await Book.findById(bookId);
+    const user = await userService.findUserbyId(userId);
+
+    if (book == null && !book?.isDeleted)
+        throw new AppError(`Book with id '${bookId}' dosen't exists`, status.NOT_FOUND);
+
+    if (user == null && !user?.isDeleted)
+        throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
+
+    if (!user._id.equals(book.user))
+        throw new AppError(`You are not userId = '${userId}'. Get out!`, status.FORBIDDEN);
+
+    return await Book.findByIdAndUpdate(bookId, bookData);
 }
 
-const deleteBook = async (bookData) => {
-    return bookData;
+const deleteBook = async (bookId, userId) => {
+    const book = await Book.findById(bookId);
+    const user = await userService.findUserbyId(userId);
+
+    if (book == null && !book?.isDeleted)
+        throw new AppError(`Book with id '${bookId}' dosen't exists`, status.NOT_FOUND);
+
+    if (user == null && !user?.isDeleted)
+        throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
+
+    return await Book.findByIdAndUpdate(bookId, { "isDeleted": true });
 }
 
 module.exports = {

@@ -17,6 +17,7 @@ router.get("/", [bookValidation.findBook, validate],
 
 // Get a book by id 
 router.get("/:bookId",
+    [bookValidation.bookId, validate],
     catchError(bookController.findBookById)
 );
 

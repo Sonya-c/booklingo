@@ -26,6 +26,9 @@ const findBookById = async (req, res) => {
 
     const book = await bookService.findBookById(bookId);
 
+    if (book == null && !book?.isDeleted)
+        throw new AppError(`Book with id '${bookId}' dosen't exists`, status.NOT_FOUND);
+
     res.status(status.OK).send(book);
 }
 
@@ -39,16 +42,17 @@ const createBook = async (req, res) => {
 
 const updateBookById = async (req, res) => {
     const { userId } = req.decodeToken;
-
-    const book = await bookService.updateBook(req.body);
+    const { bookId } = req.params;
+    const book = await bookService.updateBook(bookId, userId, req.body);
 
     res.status(status.OK).send(book);
 }
 
 const deleteBookById = async (req, res) => {
     const { userId } = req.decodeToken;
+    const { bookId } = req.params;
 
-    const book = await bookService.updateBook(req.body);
+    const book = await bookService.updateBook(bookId, userId);
 
     res.status(status.OK).send(book);
 }
