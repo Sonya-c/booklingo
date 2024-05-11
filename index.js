@@ -13,8 +13,6 @@ const connect = require('./config/connect');
 
 const PORT = process.env.PORT || 5000;
 
-// Open mongo connection 
-connect();
 
 const app = express();
 
@@ -42,7 +40,10 @@ app.use((error, req, res, next) => {
         .send({ "Error": error.message, "Stack": error.stack })
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+    // Open mongo connection 
+    const connection = await connect();
+
     const hyperLink = (text, link) => `\x1b]8;;${link}\x1b\\${text}\x1b[0m\x1b]8;;\x1b\\`;
     const serverURL = `http://localhost:${PORT}`;
     const theLittleBar = "\x1b[90m┃\x1b[0m";

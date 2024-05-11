@@ -60,11 +60,70 @@ node .\scripts\generateDatabase.js
 
 - **Authentication:**
     - `POST /auth/register` - Create a new user.
+
+        Parameters
+
+        | Name        | Type             | Description               |
+        |-------------|------------------|---------------------------|
+        | userData    | body (required)  | User data: name (opcional), email, password |
+
+        Response
+
+        | Code | Description             |     
+        |------|-------------------------|
+        | 200  | User Object and auth Token |
+        | 422  | Bad request data |
+        | 409  | Conflict - User with given email already exists |
+
     - `POST /auth/login` - Login a user.
+
+        Parameters
+
+        | Name        | Type             | Description               |
+        |-------------|------------------|---------------------------|
+        | userData    | body (required)  | User data: email, password |
+
+        Response
+
+        | Code | Description             |     
+        |------|-------------------------|
+        | 200  | User Object and auth Token |
+        | 422  | Bad request data |
+        | 404  | User dosen't exist |
+        | 401  | Wrong password |
     
 - **Users:**
     - `GET /users` - Get all users.
+
+        Parameters
+
+        | Name        | Type             | Description               | Example    |
+        |-------------|------------------|---------------------------|------------|
+        | showDeleted | query (optional) | Show deleted entries too. | true/false |
+
+        Response
+
+        | Code | Description             |     
+        |------|-------------------------|
+        | 200  | List of Objects (users) |
+
     - `GET /users/:userId` - Get one user by id.
+
+        Parameters
+
+        | Name        | Type             | Description               |
+        |-------------|------------------|---------------------------|
+        | userId      | parm (required)  | User Id (mongo Id)        |
+        | showDeleted | query (optional) | Show deleted entries too. |
+
+        Response
+
+        | Code | Description             |     
+        |------|-------------------------|
+        | 200  | User Object |
+        | 404  | User not found | 
+        | 422  | Bad request data |
+
     - `PATCH /users/:userId` - Update one user by id (auth required).
     - `DELETE /users/:userId` - Delete one user by id (auth required).
 

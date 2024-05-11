@@ -1,7 +1,7 @@
 const express = require('express');
 
 const userController = require('../controllers/user.controller');
-const { userValidation } = require('../utils/validations');
+const { userValidation, commonValitations } = require('../utils/validations');
 
 const auth = require('../middlewares/auth');
 const validate = require('../middlewares/validate');
@@ -10,12 +10,16 @@ const catchError = require('../utils/catchError');
 const router = express.Router();
 
 // Get all users 
-router.get("/", catchError(userController.getAllUsers));
+router.get(
+    "/",
+    [commonValitations.showDeleted, validate],
+    catchError(userController.getAllUsers)
+);
 
 // Get one user by id
 router.get(
     '/:userId',
-    [userValidation.userId, validate],
+    [userValidation.userId, commonValitations.showDeleted, validate],
     catchError(userController.findUserbyId)
 );
 

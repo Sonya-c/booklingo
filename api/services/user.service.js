@@ -16,8 +16,9 @@ const createUser = async (userData) => {
     return await User.create(userData);
 }
 
-const findAllUser = async () => {
-    return await User.find();
+const findAllUser = async (showDeleted = false) => {
+    if (showDeleted) return await User.find();
+    else return await User.find({ isDeleted: false });
 }
 
 const findUserbyEmail = async (email) => {
@@ -26,10 +27,10 @@ const findUserbyEmail = async (email) => {
     if (user != null && !user?.isDeleted) return user;
 }
 
-const findUserbyId = async (userId) => {
+const findUserbyId = async (userId, showDeleted = false) => {
     const user = await User.findById(userId);
 
-    if (user != null && !user?.isDeleted) return user;
+    if (user != null && (showDeleted || !user?.isDeleted)) return user;
 }
 
 const updateUserById = async (userId, userData) => {

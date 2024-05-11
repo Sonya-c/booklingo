@@ -1,6 +1,12 @@
 
 const { param, body, query, checkExact } = require("express-validator");
 
+const commonValitations = {
+    "showDeleted": [
+        query("showDeleted").default(false).toBoolean()
+    ]
+}
+
 const authValidations = {
     "register": [
         body("name")
@@ -108,6 +114,7 @@ const bookValidation = {
 }
 
 module.exports = {
+    commonValitations,
     authValidations,
     userValidation,
     bookValidation
