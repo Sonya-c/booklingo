@@ -7,6 +7,7 @@ const express = require("express");
 const authRoute = require("./api/routes/auth.route");
 const userRoute = require("./api/routes/user.route");
 const bookRoute = require("./api/routes/book.route");
+const ordersRoute = require("./api/routes/order.route");
 
 const connect = require('./config/connect');
 
@@ -31,6 +32,7 @@ app.options('*', cors());
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/book', bookRoute);
+app.use('/orders', ordersRoute);
 
 
 // Error handeling
