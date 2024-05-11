@@ -4,6 +4,11 @@ const status = require('http-status');
 const AppError = require('../utils/AppError');
 const userService = require('../services/user.service');
 
+const getAllUsers = async (req, res) => {
+    const users = await userService.findAllUser();
+
+    res.status(status.OK).send(users);
+}
 
 const findUserbyEmail = async (req, res) => {
     const { userEmail } = req.params;
@@ -41,6 +46,7 @@ const deleteUser = async (req, res) => {
 }
 
 module.exports = {
+    getAllUsers,
     findUserbyId,
     updateUserById,
     deleteUser,

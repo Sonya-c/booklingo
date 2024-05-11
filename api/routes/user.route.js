@@ -9,6 +9,9 @@ const catchError = require('../utils/catchError');
 
 const router = express.Router();
 
+// Get all users 
+router.get("/", catchError(userController.getAllUsers));
+
 // Search user by ID
 router.get(
     '/:userId',

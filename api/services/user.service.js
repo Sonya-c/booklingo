@@ -16,6 +16,9 @@ const createUser = async (userData) => {
     return await User.create(userData);
 }
 
+const findAllUser = async () => {
+    return await User.find();
+}
 
 const findUserbyEmail = async (email) => {
     const user = await User.findOne({ email });
@@ -59,5 +62,6 @@ module.exports = {
     findUserbyId,
     updateUserById,
     deleteUser,
-    findUserbyEmail
+    findUserbyEmail,
+    findAllUser
 };
