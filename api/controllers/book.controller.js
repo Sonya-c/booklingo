@@ -32,6 +32,14 @@ const findBookById = async (req, res) => {
     res.status(status.OK).send(book);
 }
 
+const findBookByUserId = async (req, res) => {
+    const { userId } = req.params;
+
+    const books = await bookService.findBookByUserId(userId);
+
+    res.status(status.OK).send(books);
+}
+
 const createBook = async (req, res) => {
     const { userId } = req.decodeToken;
 
@@ -52,7 +60,7 @@ const deleteBookById = async (req, res) => {
     const { userId } = req.decodeToken;
     const { bookId } = req.params;
 
-    const book = await bookService.updateBook(bookId, userId);
+    const book = await bookService.deleteBook(bookId, userId);
 
     res.status(status.OK).send(book);
 }
@@ -60,6 +68,7 @@ const deleteBookById = async (req, res) => {
 module.exports = {
     findBook,
     findBookById,
+    findBookByUserId,
     createBook,
     updateBookById,
     deleteBookById

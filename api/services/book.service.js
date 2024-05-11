@@ -47,6 +47,15 @@ const findBookById = async (bookId) => {
     const book = await Book.findById(bookId);
 
     if (book != null && !book?.isDeleted) return book;
+};
+
+const findBookByUserId = async (userId) => {
+    const user = await userService.findUserbyId(userId);
+
+    if (user == null && !user?.isDeleted)
+        throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
+
+    return await Book.find({ user: user, isDeleted: false });
 }
 
 const createBook = async (userId, bookData) => {
@@ -94,6 +103,7 @@ const deleteBook = async (bookId, userId) => {
 module.exports = {
     findBook,
     findBookById,
+    findBookByUserId,
     createBook,
     updateBook,
     deleteBook

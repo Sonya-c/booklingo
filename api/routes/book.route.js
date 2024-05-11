@@ -1,7 +1,7 @@
 const express = require('express');
 
 const bookController = require('../controllers/book.controller');
-const { bookValidation } = require('../utils/validations');
+const { bookValidation, userValidation } = require('../utils/validations');
 
 const auth = require('../middlewares/auth');
 const validate = require('../middlewares/validate');
@@ -19,6 +19,13 @@ router.get("/", [bookValidation.findBook, validate],
 router.get("/:bookId",
     [bookValidation.bookId, validate],
     catchError(bookController.findBookById)
+);
+
+// Get all books by userId
+router.get(
+    "/user/:userId",
+    [userValidation.userId, validate],
+    catchError(bookController.findBookByUserId)
 );
 
 // Create a book (auth required)
