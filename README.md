@@ -68,7 +68,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
-    | userData    | body (required)  | User data  |
+    | userData    | body (required)  | User data                 |
 
     UserData schema (example)
 
@@ -82,10 +82,10 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     **Response**
 
-    | Code | Description             |     
-    |------|-------------------------|
+    | Code | Description                                     |     
+    |------|-------------------------------------------------|
     | 200  | Object (user: user model, authToken: jwt token) |
-    | 422  | Bad request data |
+    | 422  | Bad request data                                |
     | 409  | Conflict - User with given email already exists |
 
     Example response
@@ -110,8 +110,8 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
+    | Name        | Type             | Description                |
+    |-------------|------------------|----------------------------|
     | userData    | body (required)  | User data: email, password |
 
     UserData schema (example)
@@ -125,12 +125,12 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     **Response**
 
-    | Code | Description             |     
-    |------|-------------------------|
+    | Code | Description                |     
+    |------|----------------------------|
     | 200  | User Object and auth Token |
-    | 422  | Bad request data |
-    | 404  | User dosen't exist |
-    | 401  | Wrong password |
+    | 422  | Bad request data           |
+    | 404  | User dosen't exist         |
+    | 401  | Wrong password             |
     
     Example response
 
@@ -152,19 +152,19 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ### Users
 
-- `GET /user` - Get all users.
+- `GET /user` - Get all users. 
 
     **Parameters**
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
-    | showDeleted | query (optional) | Boolean |
+    | showDeleted | query (optional) | Boolean                   |
 
     **Response**
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | List of User Objects |
+    | 200  | List of User Objects    |
     
 
 - `GET /user/:userId` - Get one user by id.
@@ -180,9 +180,9 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | User Object |
-    | 404  | User not found | 
-    | 422  | Bad request data |
+    | 200  | User Object             |
+    | 404  | User not found          | 
+    | 422  | Bad request data        |
 
     Example response
 
@@ -203,38 +203,38 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
-    | authToken      | header (required)  | Auth token        |
+    | Name           | Type               | Description               |
+    |----------------|--------------------|---------------------------|
+    | authToken      | header (required)  | Auth token                |
     
 
     **Response**
 
-    | Code | Description             |     
-    |------|-------------------------|
-    | 200  | User Object (before) |
-    | 404  | User not found | 
-    | 401  | Unauthorized (no token) |
-    | 403  | Forbiden |
+    | Code | Description               |     
+    |------|---------------------------|
+    | 200  | User Object (before)      |
+    | 404  | User not found            | 
+    | 401  | Unauthorized (no token)   |
+    | 403  | Forbiden (wrong password) |
 
 
 - `DELETE /user/:userId` - Delete one user by id (auth required).
 
     **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
-    | authToken      | header (required)  | Auth token        |
+    | Name           | Type               | Description               |
+    |----------------|--------------------|---------------------------|
+    | authToken      | header (required)  | Auth token                |
     
 
     **Response**
 
-    | Code | Description             |     
-    |------|-------------------------|
-    | 200  | User Object |
-    | 404  | User not found | 
-    | 401  | Unauthorized (no token) |
-    | 403  | Forbiden |
+    | Code | Description               |     
+    |------|---------------------------|
+    | 200  | User Object               |
+    | 404  | User not found            | 
+    | 401  | Unauthorized (no token)   |
+    | 403  | Forbiden (wrong password) |
 
 
 ### Books
@@ -243,23 +243,22 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
-    | title       | Query (Optional) | String |
-    | genre       | Query (Optional) | String |
-    | startPubDate | Query (Optional) | Date (string) |
-    | endPubDate   | Query (Optional)  | Date (string) |
-    | editorial    | Query (Optional)  | String |
-    | author       | Query (Optional)  | String |
-    | showDeleted  | Query (Optional)  | Boolean |
-    
+    | Name         | Type              | Description               |
+    |--------------|-------------------|---------------------------|
+    | title        | Query (Optional)  | String                    |
+    | genre        | Query (Optional)  | String                    |
+    | startPubDate | Query (Optional)  | Date (string)             |
+    | endPubDate   | Query (Optional)  | Date (string)             |
+    | editorial    | Query (Optional)  | String                    |
+    | author       | Query (Optional)  | String                    |
+    | showDeleted  | Query (Optional)  | Boolean                   |
 
     **Response**
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | Book Object list |
-    | 422  | Bad request data |
+    | 200  | Book Object list        |
+    | 422  | Bad request data        |
     
 - `GET /book/:bookId` - Get one book by id.
 
@@ -274,9 +273,9 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | Book Object list |
-    | 422  | Bad request data |
-    | 404  | Book not found |
+    | 200  | Book Object list        |
+    | 422  | Bad request data        |
+    | 404  | Book not found          |
 
     Example response
 
@@ -300,61 +299,61 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
-    | authToken      | headers (required) | AuthToken        |
-    | bookData       | body (required) | Book Data |
+    | Name           | Type               | Description               |
+    |----------------|--------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken                 |
+    | bookData       | body (required)    | Book Data                 |
 
     **Response**
 
-    | Code | Description             |     
-    |------|-------------------------|
-    | 200  | Book Object  |
-    | 422  | Bad request data |
-    | 404  | User not found | 
-    | 401  | Unauthorized (no token) |
-    | 403  | Forbiden |
+    | Code | Description               |     
+    |------|---------------------------|
+    | 200  | Book Object               |
+    | 422  | Bad request data          |
+    | 404  | User not found            | 
+    | 401  | Unauthorized (no token)   |
+    | 403  | Forbiden (wrong password) |
     
 - `PATCH /book/:bookId` - Update one book by id (auth required).
 
     **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
-    | authToken      | headers (required) | AuthToken        |
-    | bookId         | parms (required)  | Book id | 
-    | bookData       | body (required) | Book Data (partial) |
+    | Name           | Type               | Description               |
+    |----------------|--------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken                 |
+    | bookId         | parms (required)   | Book id                   | 
+    | bookData       | body (required)    | Book Data (partial)       |
 
     **Response**
 
-    | Code | Description             |     
-    |------|-------------------------|
-    | 200  | Book Object  |
-    | 422  | Bad request data |
-    | 404  | User not found | 
-    | 404  | Book not found | 
-    | 401  | Unauthorized (no token) |
-    | 403  | Forbiden |
+    | Code | Description               |     
+    |------|---------------------------|
+    | 200  | Book Object               |
+    | 422  | Bad request data          |
+    | 404  | User not found            | 
+    | 404  | Book not found            | 
+    | 401  | Unauthorized (no token)   |
+    | 403  | Forbiden (wrong password) |
 
 - `DELETE /book/:bookId` - Delete one book by id (auth required).
 
     **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
-    | authToken      | headers (required) | AuthToken        |
-    | bookId         | parms (required)  | Book id | 
+    | Name           | Type               | Description               |
+    |----------------|--------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken                 |
+    | bookId         | parms (required)   | Book id                   | 
 
     **Response**
 
-    | Code | Description             |     
-    |------|-------------------------|
-    | 200  | Book Object  |
-    | 422  | Bad request data |
-    | 404  | User not found | 
-    | 404  | Book not found | 
-    | 401  | Unauthorized (no token) |
-    | 403  | Forbiden |
+    | Code | Description               |      
+    |------|---------------------------|
+    | 200  | Book Object               |
+    | 422  | Bad request data          |
+    | 404  | User not found            | 
+    | 404  | Book not found            | 
+    | 401  | Unauthorized (no token)   |
+    | 403  | Forbiden (wrong password) |
 
 ### Orders
 
@@ -366,40 +365,40 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
      **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
-    | orderId     | params (required) | | 
+    | Name        | Type              | Description               |
+    |-------------|-------------------|---------------------------|
+    | orderId     | params (required) |                           | 
 
 
     **Response**
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | Order Object  |
-    | 404  | Order not found | 
+    | 200  | Order Object            |
+    | 404  | Order not found         | 
 
 - `POST /order` - Create a order.
     
     **Parameters**
 
-    | Name        | Type             | Description               |
-    |-------------|------------------|---------------------------|
-    | authToken      | headers (required) | AuthToken        |
-    | bookList       | body (required) | List of Book Id |
+    | Name           | Type               | Description               |
+    |----------------|--------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken                 |
+    | bookList       | body (required)    | List of Book Id           |
 
     Note: all books should have the same owner. Otherwise, a `422` will happen.
 
     **Response**
 
-    | Code | Description             |     
-    |------|-------------------------|
-    | 200  | Order Object  |
-    | 422  | Bad request data |
-    | 404  | User (orderCreator) not found | 
+    | Code | Description                    |     
+    |------|--------------------------------|
+    | 200  | Order Object                   |
+    | 422  | Bad request data               |
+    | 404  | User (orderCreator) not found  | 
     | 404  | User (orderReceiver) not found | 
-    | 404  | Book not found | 
-    | 401  | Unauthorized (no token) |
-    | 403  | Forbiden |
+    | 404  | Book not found                 | 
+    | 401  | Unauthorized (no token)        |
+    | 403  | Forbiden (wrong password)      |
 
 - `PATCH /order/:orderId`
 
