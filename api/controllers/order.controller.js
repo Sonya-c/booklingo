@@ -12,6 +12,14 @@ const createOrder = async (req, res) => {
     res.status(status.OK).send(order);
 }
 
+const findOrderById = async (req, res) => {
+    const { orderId } = req.params;
+    const order = await orderService.findOrderById(orderId);
+
+    res.status(status.OK).send(order);
+}
+
 module.exports = {
-    createOrder
+    createOrder,
+    findOrderById
 }

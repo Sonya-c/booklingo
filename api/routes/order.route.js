@@ -12,7 +12,10 @@ const router = express.Router();
 // Get all order and filter (should i filter by created/recived??)
 
 // Get order by Id 
-
+router.get(
+    "/:orderId",
+    catchError(orderController.findOrderById)
+)
 // Create a order given a userId and list of BookId
 router.post(
     "/",

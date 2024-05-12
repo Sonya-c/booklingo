@@ -358,11 +358,27 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ### Orders
 
-- `GET /order`
+- `GET /order` - Get all orders with optional filters. 
     
     <!-- debe poderse filtrar por fecha de creación (entre una y otra fecha), y por estado del pedido (en progreso, completado, cancelado -->
 
-- `POST /order`
+- `GET /order/:orderId` - Get one order by id.
+
+     **Parameters**
+
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | orderId     | params (required) | | 
+
+
+    **Response**
+
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | Order Object  |
+    | 404  | Order not found | 
+
+- `POST /order` - Create a order.
     
     **Parameters**
 
@@ -370,6 +386,8 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     |-------------|------------------|---------------------------|
     | authToken      | headers (required) | AuthToken        |
     | bookList       | body (required) | List of Book Id |
+
+    Note: all books should have the same owner. Otherwise, a `422` will happen.
 
     **Response**
 
@@ -418,11 +436,11 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     - [x] Delete a book by id.
 
 - [ ] Orders.
-    - [ ] Create an order.
+    - [x] Create an order.
     - [ ] Update an order (stauts, check auth).
     - [ ] Delete an oder.
-    - [ ] Get all order.
-    - [ ] Get order by id.
+    - [ ] Get all order (filter by status, creation date).
+    - [x] Get order by id.
 
 - Other/Not sure.
     - [ ] Get books of one user.

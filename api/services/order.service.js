@@ -34,13 +34,14 @@ const createOrder = async (userId, booksId) => {
         books.push(book);
     }
 
-    return Order.create({
-        orderCreator,
-        orderReceiver,
-        books
-    });
+    return await Order.create({ orderCreator, orderReceiver, books });
+}
+
+const findOrderById = async (orderId) => {
+    return await Order.findById(orderId);
 }
 
 module.exports = {
-    createOrder
+    createOrder,
+    findOrderById
 }
