@@ -118,6 +118,12 @@ const orderValidation = {
             .isArray({ min: 1 }).withMessage("An array of at least one element is required."),
         body("books.*")
             .isMongoId().withMessage("All element should be Mongo ids.")
+    ],
+    "orderId": [
+        param("orderId")
+            .isMongoId().withMessage("orderId is not a mongoId")
+    ],
+    "findOrder": [
     ]
 }
 

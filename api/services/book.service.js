@@ -20,27 +20,18 @@ const findBooks = async (
 
     const filter = {};
 
-    if (!showDeleted)
-        filter.isDeleted = false;
+    if (!showDeleted) filter.isDeleted = false;
 
     if (startPubDate && endPubDate) {
-        console.log(startPubDate, endPubDate);
-
         filter.pubDate = {
             $gte: startPubDate,
             $lte: endPubDate
         };
     } else if (startPubDate) {
-        console.log(startPubDate);
-
         filter.pubDate = { $gte: startPubDate };
     } else if (endPubDate) {
-        console.log(endPubDate);
-
         filter.pubDate = { $lte: endPubDate };
     }
-
-    console.log(filter.pubDate);
 
     if (title) filter.title = { $regex: new RegExp(title, "i") };
 

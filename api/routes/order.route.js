@@ -10,10 +10,16 @@ const catchError = require('../utils/catchError');
 const router = express.Router();
 
 // Get all order and filter (should i filter by created/recived??)
+router.get(
+    "/",
+    [catchError(auth)],
+    catchError(orderController.findOrder)
+);
 
 // Get order by Id 
 router.get(
     "/:orderId",
+    [orderValidation.orderId, validate],
     catchError(orderController.findOrderById)
 )
 // Create a order given a userId and list of BookId

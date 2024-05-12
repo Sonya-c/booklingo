@@ -62,7 +62,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ### Authentication
 
-- `POST /auth/register` - Create a new user.
+- `POST /auth/register` - :key: Create a new user.
 
     **Parameters**
 
@@ -106,7 +106,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     }
     ```
 
-- `POST /auth/login` - Login a user.
+- `POST /auth/login` - :key: Login a user.
 
     **Parameters**
 
@@ -152,7 +152,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ### Users
 
-- `GET /user` - Get all users. 
+- `GET /user` - :unlock: Get all users. 
 
     **Parameters**
 
@@ -167,7 +167,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 200  | List of User Objects    |
     
 
-- `GET /user/:userId` - Get one user by id.
+- `GET /user/:userId` - :unlock: Get one user by id.
 
     **Parameters**
 
@@ -199,7 +199,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     }
     ```
 
-- `PATCH /user/:userId` - Update one user by id (auth required).
+- `PATCH /user/:userId` - :lock: Update one user by id (auth required).
 
     **Parameters**
 
@@ -218,7 +218,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 403  | Forbiden (wrong password) |
 
 
-- `DELETE /user/:userId` - Delete one user by id (auth required).
+- `DELETE /user/:userId` - :lock: Delete one user by id (auth required).
 
     **Parameters**
 
@@ -239,7 +239,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ### Books
 
-- `GET /book` - Get all books with optional filters.
+- `GET /book` - :unlock: Get all books with optional filters.
 
     **Parameters**
 
@@ -261,7 +261,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 200  | Book Object list        |
     | 422  | Bad request data        |
     
-- `GET /book/:bookId` - Get one book by id.
+- `GET /book/:bookId` - :unlock: Get one book by id.
 
     **Parameters**
 
@@ -296,7 +296,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     }
     ```
 
-- `POST /book/` - Create a book (auth required).
+- `POST /book/` - :lock: Create a book (auth required).
 
     **Parameters**
 
@@ -315,7 +315,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 401  | Unauthorized (no token)   |
     | 403  | Forbiden (wrong password) |
     
-- `PATCH /book/:bookId` - Update one book by id (auth required).
+- `PATCH /book/:bookId` - :lock: Update one book by id (auth required).
 
     **Parameters**
 
@@ -336,7 +336,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 401  | Unauthorized (no token)   |
     | 403  | Forbiden (wrong password) |
 
-- `DELETE /book/:bookId` - Delete one book by id (auth required).
+- `DELETE /book/:bookId` - :lock: Delete one book by id (auth required).
 
     **Parameters**
 
@@ -358,11 +358,28 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ### Orders
 
-- `GET /order` - Get all orders with optional filters. 
+- `GET /order` - :lock: Get all orders with optional filters. 
     
     <!-- debe poderse filtrar por fecha de creación (entre una y otra fecha), y por estado del pedido (en progreso, completado, cancelado -->
+    **Parameters**
 
-- `GET /order/:orderId` - Get one order by id.
+    | Name          | Type              | Description               |
+    |---------------|-------------------|---------------------------|
+    | authToken     | header (required) |                           | 
+
+
+    **Response**
+
+    | Code | Description               |     
+    |------|---------------------------|
+    | 200  | Order Object              |
+    | 404  | Order not found           | 
+    | 401  | Unauthorized (no token)   |
+    | 403  | Forbiden (wrong password) |
+
+    
+
+- `GET /order/:orderId` - :question: Get one order by id.
 
      **Parameters**
 
@@ -378,7 +395,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 200  | Order Object            |
     | 404  | Order not found         | 
 
-- `POST /order` - Create a order.
+- `POST /order` - :lock: Create a order.
     
     **Parameters**
 
@@ -401,9 +418,9 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 401  | Unauthorized (no token)        |
     | 403  | Forbiden (wrong password)      |
 
-- `PATCH /order/:orderId`
+- `PATCH /order/:orderId` - :lock: Update an order status.
 
-- `DELETE /order/:orderId`
+- `DELETE /order/:orderId` - :lock: "Delete" an order.
 
 ## Constraints
 
@@ -439,12 +456,14 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     - [x] Create an order.
     - [ ] Update an order (stauts, check auth).
     - [ ] Delete an oder.
-    - [ ] Get all order (filter by status, creation date).
+    - [-] Get all order (filter by status, creation date).
     - [x] Get order by id.
 
 - Other/Not sure.
     - [X] Get books of one user.
     - [x] Extra query: show deleted items.
+    - [x] When getting orders, should auth be required?
+    - [ ] When getting an order by id, should auth be required?
     - [ ] When getting a order, and extra query for send order and recived orders.
     - [ ] When getting the books of a user, it should be on book route or user route?
 

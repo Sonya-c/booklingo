@@ -41,7 +41,45 @@ const findOrderById = async (orderId) => {
     return await Order.findById(orderId);
 }
 
+const findOrder = async (
+    userId,
+    orderStatus = null,
+    startcreatedDate = null,
+    endcreatedDate = null,
+    userRol = null,
+) => {
+
+    const filter = {};
+
+    if (orderStatus)
+        filter.status = orderStatus;
+
+    if (startcreatedDate && endcreatedDate) {
+        console.log(startcreatedDate, endcreatedDate);
+
+        filter.createdAt = {
+            $gte: startcreatedDate,
+            $lte: endcreatedDate
+        };
+    } else if (startcreatedDate) {
+        console.log(startcreatedDate);
+
+        filter.createdAt = { $gte: startcreatedDate };
+    } else if (endcreatedDate) {
+        console.log(endcreatedDate);
+
+        filter.createdAt = { $lte: endcreatedDate };
+    }
+
+    if (userRol)
+        filter[userRol === 'creator' ? 'orderCreator' : 'orderReceiver'] = userId;
+    else
+        filter.$or = [{ orderCreator: userId }, { orderReceiver: userId }];
+
+    return await Order.find(filter);
+}
 module.exports = {
     createOrder,
-    findOrderById
+    findOrderById,
+    findOrder
 }
