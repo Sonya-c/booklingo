@@ -33,7 +33,7 @@ const findUserbyId = async (userId, showDeleted = false) => {
     if (user != null && (showDeleted || !user?.isDeleted)) return user;
 }
 
-const updateUserById = async (userId, userData) => {
+const updateUser = async (userId, userData) => {
 
     if (await findUserbyId(userId) == null) // Check if user exist 
         throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
@@ -59,10 +59,9 @@ const deleteUser = async (userId) => {
 }
 
 module.exports = {
-    createUser,
+    findAllUser,
     findUserbyId,
-    updateUserById,
+    createUser,
+    updateUser,
     deleteUser,
-    findUserbyEmail,
-    findAllUser
 };

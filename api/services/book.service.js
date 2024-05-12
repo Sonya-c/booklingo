@@ -6,29 +6,40 @@ const AppError = require('../utils/AppError');
 const status = require('http-status');
 
 
-const findBook = async (
+const findBooks = async (
     title,
     startPubDate,
     endPubDate,
     genre,
     editorial,
-    author
+    author,
+    showDeleted = false
 ) => {
 
-    console.log(startPubDate, endPubDate);
 
-    const filter = { isDeleted: false };
+    const filter = {};
+
+    if (!showDeleted)
+        filter.isDeleted = false;
 
     if (startPubDate && endPubDate) {
+        console.log(startPubDate, endPubDate);
+
         filter.pubDate = {
             $gte: startPubDate,
             $lte: endPubDate
         };
     } else if (startPubDate) {
+        console.log(startPubDate);
+
         filter.pubDate = { $gte: startPubDate };
     } else if (endPubDate) {
+        console.log(endPubDate);
+
         filter.pubDate = { $lte: endPubDate };
     }
+
+    console.log(filter.pubDate);
 
     if (title) filter.title = { $regex: new RegExp(title, "i") };
 
@@ -43,20 +54,11 @@ const findBook = async (
     return books;
 };
 
-const findBookById = async (bookId) => {
+const findBookById = async (bookId, showDeleted = false) => {
     const book = await Book.findById(bookId);
 
-    if (book != null && !book?.isDeleted) return book;
+    if (book != null && (showDeleted || !book?.isDeleted)) return book;
 };
-
-const findBookByUserId = async (userId) => {
-    const user = await userService.findUserbyId(userId);
-
-    if (user == null && !user?.isDeleted)
-        throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
-
-    return await Book.find({ user: user, isDeleted: false });
-}
 
 const createBook = async (userId, bookData) => {
     const user = await userService.findUserbyId(userId);
@@ -82,7 +84,7 @@ const updateBook = async (bookId, userId, bookData) => {
         throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
 
     if (!user._id.equals(book.user))
-        throw new AppError(`You are not userId = '${userId}'. Get out!`, status.FORBIDDEN);
+        throw new AppError(`You are not userId = '${book.user}'. Get out!`, status.FORBIDDEN);
 
     return await Book.findByIdAndUpdate(bookId, bookData);
 }
@@ -97,13 +99,15 @@ const deleteBook = async (bookId, userId) => {
     if (user == null && !user?.isDeleted)
         throw new AppError(`User with id '${userId}' dosen't exists`, status.NOT_FOUND);
 
+    if (!user._id.equals(book.user))
+        throw new AppError(`You are not userId = '${book.user}'. Get out!`, status.FORBIDDEN);
+
     return await Book.findByIdAndUpdate(bookId, { "isDeleted": true });
 }
 
 module.exports = {
-    findBook,
+    findBooks,
     findBookById,
-    findBookByUserId,
     createBook,
     updateBook,
     deleteBook

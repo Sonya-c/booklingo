@@ -25,10 +25,10 @@ const findUserbyId = async (req, res) => {
 
 }
 
-const updateUserById = async (req, res) => {
+const updateUser = async (req, res) => {
     const { userId } = req.decodeToken;
 
-    const user = await userService.updateUserById(userId, req.body);
+    const user = await userService.updateUser(userId, req.body);
     res.status(status.OK).send(user);
 }
 
@@ -41,6 +41,6 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     findUserbyId,
-    updateUserById,
+    updateUser,
     deleteUser,
 };

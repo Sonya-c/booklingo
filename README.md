@@ -54,118 +54,207 @@ It also saves the plainPassword.
 node .\scripts\generateDatabase.js
 ```
 
-**This data is just for testing purposes so it's saved in the test db. Never in production**.
- 
+**This data is just for testing purposes so it's saved in the test db. Never in production**. 
+
+This script use the [faker.js](https://github.com/faker-js/faker) library and a set of pre-defined genres. You can ajust the numbers of users and books to be created changing the `userNumber` and `bookNumber` variables (respectively).
+
 ## Endpoints 
 
-- **Authentication:**
-    - `POST /auth/register` - Create a new user.
+### Authentication
 
-        Parameters
+- `POST /auth/register` - Create a new user.
 
-        | Name        | Type             | Description               |
-        |-------------|------------------|---------------------------|
-        | userData    | body (required)  | User data: name (opcional), email, password |
+    Parameters
 
-        Response
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | userData    | body (required)  | User data: name (opcional), email, password |
 
-        | Code | Description             |     
-        |------|-------------------------|
-        | 200  | User Object and auth Token |
-        | 422  | Bad request data |
-        | 409  | Conflict - User with given email already exists |
+    Response
 
-    - `POST /auth/login` - Login a user.
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | User Object and auth Token |
+    | 422  | Bad request data |
+    | 409  | Conflict - User with given email already exists |
 
-        Parameters
+- `POST /auth/login` - Login a user.
 
-        | Name        | Type             | Description               |
-        |-------------|------------------|---------------------------|
-        | userData    | body (required)  | User data: email, password |
+    Parameters
 
-        Response
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | userData    | body (required)  | User data: email, password |
 
-        | Code | Description             |     
-        |------|-------------------------|
-        | 200  | User Object and auth Token |
-        | 422  | Bad request data |
-        | 404  | User dosen't exist |
-        | 401  | Wrong password |
+    Response
+
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | User Object and auth Token |
+    | 422  | Bad request data |
+    | 404  | User dosen't exist |
+    | 401  | Wrong password |
     
-- **Users:**
-    - `GET /users` - Get all users.
+### Users
 
-        Parameters
+- `GET /users` - Get all users.
 
-        | Name        | Type             | Description               | Example    |
-        |-------------|------------------|---------------------------|------------|
-        | showDeleted | query (optional) | Show deleted entries too. | true/false |
+    Parameters
 
-        Response
+    | Name        | Type             | Description               | Example    |
+    |-------------|------------------|---------------------------|------------|
+    | showDeleted | query (optional) | Show deleted entries too. | true/false |
 
-        | Code | Description             |     
-        |------|-------------------------|
-        | 200  | List of Objects (users) |
+    Response
 
-    - `GET /users/:userId` - Get one user by id.
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | List of Objects (users) |
 
-        Parameters
+- `GET /users/:userId` - Get one user by id.
 
-        | Name        | Type             | Description               |
-        |-------------|------------------|---------------------------|
-        | userId      | parm (required)  | User Id (mongo Id)        |
-        | showDeleted | query (optional) | Show deleted entries too. |
+    Parameters
 
-        Response
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | userId      | parm (required)  | User Id (mongo Id)        |
+    | showDeleted | query (optional) | Show deleted entries too. |
 
-        | Code | Description             |     
-        |------|-------------------------|
-        | 200  | User Object |
-        | 404  | User not found | 
-        | 422  | Bad request data |
+    Response
 
-    - `PATCH /users/:userId` - Update one user by id (auth required).
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | User Object |
+    | 404  | User not found | 
+    | 422  | Bad request data |
 
-        Parameters
+- `PATCH /users/:userId` - Update one user by id (auth required).
 
-        | Name        | Type             | Description               |
-        |-------------|------------------|---------------------------|
-        | authToken      | header (required)  | Auth token        |
-        
+    Parameters
 
-        Response
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | authToken      | header (required)  | Auth token        |
+    
 
-        | Code | Description             |     
-        |------|-------------------------|
-        | 200  | User Object |
-        | 404  | User not found | 
-        | 401  | Unauthorized (no token) |
-        | 403  | Forbiden |
+    Response
 
-    - `DELETE /users/:userId` - Delete one user by id (auth required).
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | User Object |
+    | 404  | User not found | 
+    | 401  | Unauthorized (no token) |
+    | 403  | Forbiden |
 
-        | Name        | Type             | Description               |
-        |-------------|------------------|---------------------------|
-        | authToken      | header (required)  | Auth token        |
-        
+- `DELETE /users/:userId` - Delete one user by id (auth required).
 
-        Response
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | authToken      | header (required)  | Auth token        |
+    
 
-        | Code | Description             |     
-        |------|-------------------------|
-        | 200  | User Object |
-        | 404  | User not found | 
-        | 401  | Unauthorized (no token) |
-        | 403  | Forbiden |
+    Response
 
-- **Books:**
-    - `GET /books` - Get all users. Optional filters: genre, pubDate (range), editorial, author adn title.
-    - `GET /book/:bookId` - Get one book by id.
-    - `POST /book/` - Create a book (auth required).
-    - `PATCH /book/:bookId` - Update one book by id (auth required).
-    - `DELETE /book/:bookId` - Delete one book by id (auth required).
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | User Object |
+    | 404  | User not found | 
+    | 401  | Unauthorized (no token) |
+    | 403  | Forbiden |
 
-- **Orders:**
+
+### Books
+
+- `GET /books` - Get all books with optional filters.
+
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | title       | Query (Optional) | String |
+    | genre       | Query (Optional) | String |
+    | startPubDate | Query (Optional) | Date (string) |
+    | endPubDate   | Query (Optional)  | Date (string) |
+    | editorial    | Query (Optional)  | String |
+    | author       | Query (Optional)  | String |
+    | showDeleted  | Query (Optional)  | Boolean |
+    
+
+    Response
+
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | Book Object list |
+    | 422  | Bad request data |
+    
+- `GET /book/:bookId` - Get one book by id.
+
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | BookId      | parms (required) | Book Id (mongo Id)        |
+    
+
+    Response
+
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | Book Object list |
+    | 422  | Bad request data |
+    | 404  | Book not found |
+
+- `POST /book/` - Create a book (auth required).
+
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken        |
+    | bookData       | body (required) | Book Data |
+
+    Response
+
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | Book Object  |
+    | 422  | Bad request data |
+    | 404  | User not found | 
+    | 401  | Unauthorized (no token) |
+    | 403  | Forbiden |
+    
+- `PATCH /book/:bookId` - Update one book by id (auth required).
+
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken        |
+    | bookId         | parms (required)  | Book id | 
+    | bookData       | body (required) | Book Data (partial) |
+
+    Response
+
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | Book Object  |
+    | 422  | Bad request data |
+    | 404  | User not found | 
+    | 404  | Book not found | 
+    | 401  | Unauthorized (no token) |
+    | 403  | Forbiden |
+
+- `DELETE /book/:bookId` - Delete one book by id (auth required).
+
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken        |
+    | bookId         | parms (required)  | Book id | 
+
+    Response
+
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | Book Object  |
+    | 422  | Bad request data |
+    | 404  | User not found | 
+    | 404  | Book not found | 
+    | 401  | Unauthorized (no token) |
+    | 403  | Forbiden |
+
+### Orders
 
 ## Constraints
 
@@ -194,7 +283,6 @@ node .\scripts\generateDatabase.js
     - [x] Create an user.
     - [x] Get all books (+ optional filters) 
     - [x] Get a book by id.
-    - [x] Get all book by userId.
     - [x] Update a book by id.
     - [x] Delete a book by id.
 
@@ -206,7 +294,8 @@ node .\scripts\generateDatabase.js
     - [ ] Get order by id.
 
 - Other/Not sure.
-    - [ ] Extra query: show deleted items.
+    - [ ] Get books of one user.
+    - [x] Extra query: show deleted items.
     - [ ] When getting a order, and extra query for send order and recived orders.
     - [ ] When getting the books of a user, it should be on book route or user route?
 

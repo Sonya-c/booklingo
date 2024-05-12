@@ -27,7 +27,7 @@ router.get(
 router.patch(
     '/',
     [userValidation.update, validate, catchError(auth)],
-    catchError(userController.updateUserById)
+    catchError(userController.updateUser)
 );
 
 // Delete one user by id (auth required)

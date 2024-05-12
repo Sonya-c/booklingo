@@ -15,6 +15,42 @@ process.env.MONGO_DB = "test";
 const userNumber = 10;
 const bookNumber = 20;
 
+const bookGenres = [
+    "Fiction",
+    "Non-fiction",
+    "Mystery",
+    "Thriller",
+    "Horror",
+    "Science Fiction",
+    "Fantasy",
+    "Romance",
+    "Historical Fiction",
+    "Biography",
+    "Memoir",
+    "Self-help",
+    "Young Adult",
+    "Children's",
+    "Poetry",
+    "Humor",
+    "Adventure",
+    "Dystopian",
+    "Crime",
+    "Graphic Novel",
+    "Cookbook",
+    "Travel",
+    "Science",
+    "Art",
+    "Music",
+    "Sports",
+    "Religion",
+    "Philosophy",
+    "Psychology",
+    "Business",
+    "Economics",
+    "Politics",
+    "True Crime"
+];
+
 const createRandomUser = async () => {
     const password = faker.internet.password({ length: 8 });
 
@@ -35,9 +71,9 @@ const createRandomBook = async (userId) => {
         title: faker.lorem.lines(1),
         author: faker.person.fullName(),
         editorial: faker.company.name(),
-        genre: "yes",
+        genre: bookGenres[Math.floor(Math.random() * bookGenres.length)],
         pubDate: faker.date.between({
-            from: '-002700-01-01T16:19:31.822Z',
+            from: '1492-10-12T16:19:31.822Z',
             to: new Date()
         })
     }
@@ -50,6 +86,7 @@ connect().then(async () => {
     // date.setYear(-2700);
     // date.setMonth(0);
     // date.setDate(1);
+
     const users = await Promise.all(
         Array.from({ length: userNumber }, async () => {
             return await createRandomUser()

@@ -5,17 +5,18 @@ const AppError = require('../utils/AppError');
 const bookService = require('../services/book.service');
 
 
-const findBook = async (req, res) => {
+const findBooks = async (req, res) => {
     // Extract author, editorial, genre, pubDate and title
-    const { title, startPubDate, endPubDate, genre, editorial, author } = req.query;
+    const { title, startPubDate, endPubDate, genre, editorial, author, showDeleted } = req.query;
 
-    const books = await bookService.findBook(
+    const books = await bookService.findBooks(
         title,
         startPubDate,
         endPubDate,
         genre,
         editorial,
-        author
+        author,
+        showDeleted
     );
 
     res.status(status.OK).send(books);
@@ -23,8 +24,9 @@ const findBook = async (req, res) => {
 
 const findBookById = async (req, res) => {
     const { bookId } = req.params;
+    const { showDeleted } = req.query;
 
-    const book = await bookService.findBookById(bookId);
+    const book = await bookService.findBookById(bookId, showDeleted);
 
     if (book == null && !book?.isDeleted)
         throw new AppError(`Book with id '${bookId}' dosen't exists`, status.NOT_FOUND);
@@ -32,13 +34,6 @@ const findBookById = async (req, res) => {
     res.status(status.OK).send(book);
 }
 
-const findBookByUserId = async (req, res) => {
-    const { userId } = req.params;
-
-    const books = await bookService.findBookByUserId(userId);
-
-    res.status(status.OK).send(books);
-}
 
 const createBook = async (req, res) => {
     const { userId } = req.decodeToken;
@@ -48,15 +43,16 @@ const createBook = async (req, res) => {
     res.status(status.OK).send(book);
 }
 
-const updateBookById = async (req, res) => {
+const updateBook = async (req, res) => {
     const { userId } = req.decodeToken;
     const { bookId } = req.params;
+
     const book = await bookService.updateBook(bookId, userId, req.body);
 
     res.status(status.OK).send(book);
 }
 
-const deleteBookById = async (req, res) => {
+const deleteBook = async (req, res) => {
     const { userId } = req.decodeToken;
     const { bookId } = req.params;
 
@@ -66,10 +62,9 @@ const deleteBookById = async (req, res) => {
 }
 
 module.exports = {
-    findBook,
+    findBooks,
     findBookById,
-    findBookByUserId,
     createBook,
-    updateBookById,
-    deleteBookById
+    updateBook,
+    deleteBook
 }
