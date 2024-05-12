@@ -58,21 +58,19 @@ const bookValidation = {
     ],
     "findBook": [
         query("title")
-            .isString()
             .isString().optional({ nullable: true }),
         query("startPubDate")
             .toDate().optional({ nullable: true }),
         query("endPubDate")
             .toDate().optional({ nullable: true }),
         query("genre")
-            .isString()
             .isString().optional({ nullable: true }),
         query("editorial")
-            .isString()
             .isString().optional({ nullable: true }),
         query("author")
-            .isString()
             .isString().optional({ nullable: true }),
+        query("user")
+            .isMongoId().optional({ nullable: true }),
         checkExact([], { message: 'Too many fields specified' })
     ],
     "createBook": [

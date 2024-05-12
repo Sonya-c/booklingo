@@ -252,6 +252,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | editorial    | Query (Optional)  | String                    |
     | author       | Query (Optional)  | String                    |
     | showDeleted  | Query (Optional)  | Boolean                   |
+    | user         | query (Optional)  | Moongo Id of the owner    |
 
     **Response**
 
@@ -442,7 +443,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     - [x] Get order by id.
 
 - Other/Not sure.
-    - [ ] Get books of one user.
+    - [X] Get books of one user.
     - [x] Extra query: show deleted items.
     - [ ] When getting a order, and extra query for send order and recived orders.
     - [ ] When getting the books of a user, it should be on book route or user route?

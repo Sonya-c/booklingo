@@ -13,6 +13,7 @@ const findBooks = async (
     genre,
     editorial,
     author,
+    user,
     showDeleted = false
 ) => {
 
@@ -48,6 +49,8 @@ const findBooks = async (
     if (editorial) filter.editorial = { $regex: new RegExp(editorial, "i") };
 
     if (author) filter.author = { $regex: new RegExp(author, "i") };
+
+    if (user) filter.user = { $eq: user };
 
     const books = await Book.find(filter);
 
