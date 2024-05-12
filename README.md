@@ -301,9 +301,9 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ## Authors
 
-- Sonya Castro @sonya-c
-    - sonyac@uninorte.edu.co
-    - sonya.castro.gomez@gmail.com
+<a href="https://github.com/sonya-c/booklingo/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=sonya-c/booklingo" />
+</a>
 
 <!-- ## Acknowledgments
 
