@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 const status = require('http-status');
+
+const morgan = require("morgan");
 const cors = require('cors');
 const express = require("express");
 
@@ -25,6 +27,14 @@ app.use(express.urlencoded({ extended: true }));
 // cors 
 app.use(cors());
 app.options('*', cors());
+
+// Enable morgan 
+app.use(morgan('dev'));
+
+// 'Hello world' route
+app.get("/", (req, res) => {
+    res.json({ method: req.method, message: "Hello World", ...req.body });
+});
 
 // routes 
 app.use('/auth', authRoute);

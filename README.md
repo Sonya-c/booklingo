@@ -4,7 +4,7 @@ Book e-commerce service for the sale and purchase of used books.
 
 ## Getting Started
 
-**Dependencies**
+**Pre-requisites**
 
 - Node v20.11.0 (or latest)
 - npm v10.2.4 (or latest)
