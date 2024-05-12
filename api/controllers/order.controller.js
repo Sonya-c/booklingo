@@ -14,7 +14,9 @@ const createOrder = async (req, res) => {
 
 const findOrderById = async (req, res) => {
     const { orderId } = req.params;
-    const order = await orderService.findOrderById(orderId);
+    const { userId } = req.decodeToken;
+
+    const order = await orderService.findOrderById(orderId, userId);
 
     res.status(status.OK).send(order);
 }
@@ -40,8 +42,19 @@ const findOrder = async (req, res) => {
     res.status(status.OK).send(orders);
 }
 
+
+const updateOrderStatus = async (req, res) => {
+    const { userId } = req.decodeToken;
+    const { orderId } = req.params;
+    const { status: orderStatus } = req.body;
+
+    const order = await orderService.updateOrderStatus(orderId, userId, orderStatus);
+    res.status(status.OK).send(order);
+}
+
 module.exports = {
     createOrder,
     findOrderById,
-    findOrder
+    findOrder,
+    updateOrderStatus
 }

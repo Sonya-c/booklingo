@@ -377,16 +377,15 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 401  | Unauthorized (no token)   |
     | 403  | Forbiden (wrong password) |
 
-    
 
-- `GET /order/:orderId` - :question: Get one order by id.
+- `GET /order/:orderId` - :lock: Get one order by id.
 
      **Parameters**
 
     | Name        | Type              | Description               |
     |-------------|-------------------|---------------------------|
     | orderId     | params (required) |                           | 
-
+    | authToken   | header (required) |                           | 
 
     **Response**
 
@@ -394,6 +393,10 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     |------|-------------------------|
     | 200  | Order Object            |
     | 404  | Order not found         | 
+    | 404  | User not found         | 
+    | 401  | Unauthorized (no token)   |
+    | 403  | Forbiden (wrong password) |
+    | 403  | Forbiden (you are neither order creator nor order reciver) |
 
 - `POST /order` - :lock: Create a order.
     
@@ -419,6 +422,25 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 403  | Forbiden (wrong password)      |
 
 - `PATCH /order/:orderId` - :lock: Update an order status.
+
+    **Parameters**
+
+    | Name           | Type               | Description               |
+    |----------------|--------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken                 |
+    | booId          | parms (required)   | Book Id                   |
+    | status         | body (required)    | "CANCELED" or "COMPLETED". The user creator only can cancel an order. The user reciver can both canceled and mark as complete an order. |
+    
+    **Response**
+
+    | Code | Description                    |     
+    |------|--------------------------------|
+    | 200  | Order Object                   |
+    | 422  | Bad request data               |
+    | 404  | User not found                 | 
+    | 404  | Book not found                 | 
+    | 401  | Unauthorized (no token)        |
+    | 403  | Forbiden (wrong password, nor creator nor reciver) |
 
 - `DELETE /order/:orderId` - :lock: "Delete" an order.
 
@@ -454,8 +476,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 - [ ] Orders.
     - [x] Create an order.
-    - [ ] Update an order (stauts, check auth).
-    - [ ] Delete an oder.
+    - [x] Update an order (stauts, check auth).
     - [-] Get all order (filter by status, creation date).
     - [x] Get order by id.
 
@@ -463,8 +484,8 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     - [X] Get books of one user.
     - [x] Extra query: show deleted items.
     - [x] When getting orders, should auth be required?
-    - [ ] When getting an order by id, should auth be required?
-    - [ ] When getting a order, and extra query for send order and recived orders.
+    - [x] When getting an order by id, should auth be required?
+    - [ ] When getting a order, and extra query for send order and recived orders?
     - [ ] When getting the books of a user, it should be on book route or user route?
 
 ## Authors

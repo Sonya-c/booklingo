@@ -19,18 +19,24 @@ router.get(
 // Get order by Id 
 router.get(
     "/:orderId",
-    [orderValidation.orderId, validate],
+    [orderValidation.orderId, validate, catchError(auth)],
     catchError(orderController.findOrderById)
 )
+
 // Create a order given a userId and list of BookId
 router.post(
     "/",
     [orderValidation.createOrder, validate, catchError(auth)],
     catchError(orderController.createOrder)
 )
-// Update status (cancel)
 
-// Update status (complete)
+// Update status 
+
+router.patch(
+    "/:orderId/",
+    [orderValidation.orderId, validate, catchError(auth)],
+    catchError(orderController.updateOrderStatus)
+)
 
 // Delete?
 
