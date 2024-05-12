@@ -30,11 +30,13 @@ app.options('*', cors());
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/book', bookRoute);
-app.use('/orders', ordersRoute);
+app.use('/order', ordersRoute);
 
 
 // Error handeling
 app.use((error, req, res, next) => {
+    console.error(error);
+
     return res
         .status(error.status || status.INTERNAL_SERVER_ERROR)
         .send({ "Error": error.message, "Stack": error.stack })

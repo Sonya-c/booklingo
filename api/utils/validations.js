@@ -113,9 +113,20 @@ const bookValidation = {
     ]
 }
 
+const orderValidation = {
+    "createOrder": [
+        body("books")
+            .exists().withMessage("an array is required.")
+            .isArray({ min: 1 }).withMessage("An array of at least one element is required."),
+        body("books.*")
+            .isMongoId().withMessage("All element should be Mongo ids.")
+    ]
+}
+
 module.exports = {
     commonValitations,
     authValidations,
     userValidation,
-    bookValidation
+    bookValidation,
+    orderValidation,
 }

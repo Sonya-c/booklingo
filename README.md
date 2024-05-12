@@ -64,29 +64,66 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 - `POST /auth/register` - Create a new user.
 
-    Parameters
+    **Parameters**
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
-    | userData    | body (required)  | User data: name (opcional), email, password |
+    | userData    | body (required)  | User data  |
 
-    Response
+    UserData schema (example)
+
+    ```JSON
+    {
+        "name": "Waldo", // name is optional
+        "email": "TheOriginalWaldo@hotmail.com",
+        "password": "raMGvnui"
+    }
+    ```
+
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | User Object and auth Token |
+    | 200  | Object (user: user model, authToken: jwt token) |
     | 422  | Bad request data |
     | 409  | Conflict - User with given email already exists |
 
+    Example response
+
+    ```JSON
+    {
+        "user": {
+            "_id": "66400b5d258f2e3132bcd837",
+            "name": "Kelvin Leffler",
+            "email": "Lukas_Stark23@yahoo.com",
+            "password": "$2b$10$KNCmq.PCwx.J6ZhmjNX2yOZ5K7VSruCqHpdyaW514TEhmXYYxzkUK",
+            "isDeleted": false,
+            "createdAt": "2024-05-12T00:20:45.306Z",
+            "updatedAt": "2024-05-12T00:20:45.306Z",
+            "__v": 0
+        },
+        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQwMGI1ZDI1OGYyZTMxMzJiY2Q4MzciLCJpYXQiOjE3MTU0NzYzMzQsImV4cCI6MTcxNTQ3OTkzNH0.iPgi_CHw9PbU-YqdcAKHoMkfzlAy7146zf7AjtaDlY4"
+    }
+    ```
+
 - `POST /auth/login` - Login a user.
 
-    Parameters
+    **Parameters**
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
     | userData    | body (required)  | User data: email, password |
 
-    Response
+    UserData schema (example)
+
+    ```JSON
+    {
+        "email": "TheOriginalWaldo@hotmail.com",
+        "password": "raMGvnui"
+    }
+    ```
+
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
@@ -95,32 +132,51 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 404  | User dosen't exist |
     | 401  | Wrong password |
     
+    Example response
+
+    ```JSON
+    {
+        "user": {
+            "_id": "66400b5d258f2e3132bcd837",
+            "name": "Kelvin Leffler",
+            "email": "Lukas_Stark23@yahoo.com",
+            "password": "$2b$10$KNCmq.PCwx.J6ZhmjNX2yOZ5K7VSruCqHpdyaW514TEhmXYYxzkUK",
+            "isDeleted": false,
+            "createdAt": "2024-05-12T00:20:45.306Z",
+            "updatedAt": "2024-05-12T00:20:45.306Z",
+            "__v": 0
+        },
+        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQwMGI1ZDI1OGYyZTMxMzJiY2Q4MzciLCJpYXQiOjE3MTU0NzYzMzQsImV4cCI6MTcxNTQ3OTkzNH0.iPgi_CHw9PbU-YqdcAKHoMkfzlAy7146zf7AjtaDlY4"
+    }
+    ```
+
 ### Users
 
-- `GET /users` - Get all users.
+- `GET /user` - Get all users.
 
-    Parameters
+    **Parameters**
 
-    | Name        | Type             | Description               | Example    |
-    |-------------|------------------|---------------------------|------------|
-    | showDeleted | query (optional) | Show deleted entries too. | true/false |
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | showDeleted | query (optional) | Boolean |
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | List of Objects (users) |
+    | 200  | List of User Objects |
+    
 
-- `GET /users/:userId` - Get one user by id.
+- `GET /user/:userId` - Get one user by id.
 
-    Parameters
+    **Parameters**
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
     | userId      | parm (required)  | User Id (mongo Id)        |
     | showDeleted | query (optional) | Show deleted entries too. |
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
@@ -128,32 +184,50 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 404  | User not found | 
     | 422  | Bad request data |
 
-- `PATCH /users/:userId` - Update one user by id (auth required).
+    Example response
 
-    Parameters
+    ```JSON
+    {
+        "_id": "66400b5d258f2e3132bcd837",
+        "name": "Kelvin Leffler",
+        "email": "Lukas_Stark23@yahoo.com",
+        "password": "$2b$10$KNCmq.PCwx.J6ZhmjNX2yOZ5K7VSruCqHpdyaW514TEhmXYYxzkUK",
+        "isDeleted": false,
+        "createdAt": "2024-05-12T00:20:45.306Z",
+        "updatedAt": "2024-05-12T00:20:45.306Z",
+        "__v": 0
+    }
+    ```
+
+- `PATCH /user/:userId` - Update one user by id (auth required).
+
+    **Parameters**
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
     | authToken      | header (required)  | Auth token        |
     
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | User Object |
+    | 200  | User Object (before) |
     | 404  | User not found | 
     | 401  | Unauthorized (no token) |
     | 403  | Forbiden |
 
-- `DELETE /users/:userId` - Delete one user by id (auth required).
+
+- `DELETE /user/:userId` - Delete one user by id (auth required).
+
+    **Parameters**
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
     | authToken      | header (required)  | Auth token        |
     
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
@@ -165,7 +239,9 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ### Books
 
-- `GET /books` - Get all books with optional filters.
+- `GET /book` - Get all books with optional filters.
+
+    **Parameters**
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
@@ -178,7 +254,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | showDeleted  | Query (Optional)  | Boolean |
     
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
@@ -187,12 +263,14 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     
 - `GET /book/:bookId` - Get one book by id.
 
+    **Parameters**
+
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
     | BookId      | parms (required) | Book Id (mongo Id)        |
     
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
@@ -200,14 +278,34 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 422  | Bad request data |
     | 404  | Book not found |
 
+    Example response
+
+    ```JSON
+    {
+        "_id": "66400b5e258f2e3132bcd85d",
+        "user": "66400b5d258f2e3132bcd837",
+        "title": "Tractatus logico-philosophicus",
+        "author": "Ludwig Wittgenstein",
+        "editorial": "Trantow - Bernhard",
+        "genre": "Graphic Novel",
+        "pubDate": "1611-03-14T16:43:46.191Z",
+        "isDeleted": true,
+        "createdAt": "2024-05-12T00:20:46.321Z",
+        "updatedAt": "2024-05-12T00:38:20.854Z",
+        "__v": 0s
+    }
+    ```
+
 - `POST /book/` - Create a book (auth required).
+
+    **Parameters**
 
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
     | authToken      | headers (required) | AuthToken        |
     | bookData       | body (required) | Book Data |
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
@@ -219,13 +317,15 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     
 - `PATCH /book/:bookId` - Update one book by id (auth required).
 
+    **Parameters**
+
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
     | authToken      | headers (required) | AuthToken        |
     | bookId         | parms (required)  | Book id | 
     | bookData       | body (required) | Book Data (partial) |
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
@@ -238,12 +338,14 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 - `DELETE /book/:bookId` - Delete one book by id (auth required).
 
+    **Parameters**
+
     | Name        | Type             | Description               |
     |-------------|------------------|---------------------------|
     | authToken      | headers (required) | AuthToken        |
     | bookId         | parms (required)  | Book id | 
 
-    Response
+    **Response**
 
     | Code | Description             |     
     |------|-------------------------|
@@ -255,6 +357,35 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | 403  | Forbiden |
 
 ### Orders
+
+- `GET /order`
+    
+    <!-- debe poderse filtrar por fecha de creación (entre una y otra fecha), y por estado del pedido (en progreso, completado, cancelado -->
+
+- `POST /order`
+    
+    **Parameters**
+
+    | Name        | Type             | Description               |
+    |-------------|------------------|---------------------------|
+    | authToken      | headers (required) | AuthToken        |
+    | bookList       | body (required) | List of Book Id |
+
+    **Response**
+
+    | Code | Description             |     
+    |------|-------------------------|
+    | 200  | Order Object  |
+    | 422  | Bad request data |
+    | 404  | User (orderCreator) not found | 
+    | 404  | User (orderReceiver) not found | 
+    | 404  | Book not found | 
+    | 401  | Unauthorized (no token) |
+    | 403  | Forbiden |
+
+- `PATCH /order/:orderId`
+
+- `DELETE /order/:orderId`
 
 ## Constraints
 

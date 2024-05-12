@@ -61,6 +61,7 @@ const deleteUser = async (userId) => {
 module.exports = {
     findAllUser,
     findUserbyId,
+    findUserbyEmail,
     createUser,
     updateUser,
     deleteUser,

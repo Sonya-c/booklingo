@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    user: {
+    orderCreator: {
+        type: mongoose.Types.ObjectId,
+        ref: "User"
+    },
+    orderReceiver: {
         type: mongoose.Types.ObjectId,
         ref: "User"
     },
