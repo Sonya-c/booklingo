@@ -22,9 +22,9 @@ const findAllUser = async (showDeleted = false) => {
 }
 
 const findUserbyEmail = async (email) => {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email, isDeleted: false });
 
-    if (user != null && !user?.isDeleted) return user;
+    if (user != null) return user;
 }
 
 const findUserbyId = async (userId, showDeleted = false) => {

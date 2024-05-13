@@ -41,7 +41,7 @@ const createBook = async (req, res) => {
 
     const book = await bookService.createBook(userId, req.body);
 
-    res.status(status.OK).send(book);
+    res.status(status.CREATED).send(book);
 }
 
 const updateBook = async (req, res) => {

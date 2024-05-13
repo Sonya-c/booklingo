@@ -96,14 +96,14 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
         "user": {
             "name": "Waldo",
             "email": "TheOriginalWaldo@hotmail.com",
-            "password": "$2b$10$PmNlTkdbJtuvo5hPErAOxupeYz7pefpeZGe8UlSas9nGZIMCm1gFC",
+            "password": "$2b$10$MHYVRNe7Nki9CPz7MXCRbegQZfbHm09l5eIUanJYH3b1GU4ezVmCq",
             "isDeleted": false,
-            "_id": "66416be26ddf0ea93bf759c0",
-            "createdAt": "2024-05-13T01:24:50.866Z",
-            "updatedAt": "2024-05-13T01:24:50.866Z",
+            "_id": "6641830665a4fb605dc28cec",
+            "createdAt": "2024-05-13T03:03:34.985Z",
+            "updatedAt": "2024-05-13T03:03:34.985Z",
             "__v": 0
         },
-        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQxNmJlMjZkZGYwZWE5M2JmNzU5YzAiLCJpYXQiOjE3MTU1NjM0OTEsImV4cCI6MTcxNTU2NzA5MX0.ofUddeeIWpkAD2VJwPrUazAbpywviC_KkrklWSIaPxE"
+        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQxODMwNjY1YTRmYjYwNWRjMjhjZWMiLCJpYXQiOjE3MTU1Njk0MTUsImV4cCI6MTcxNTU3MzAxNX0.ghO1kw-ckz7nYlLJaqQiv_uk_7o8He1uZh0GlOC_7g8"
     }
     ```
 
@@ -215,7 +215,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     |------|---------------------------|
     | 200  | OK: User Object (before)  |
     | 404  | Not found: User not found (or user was deleted) | 
-    | 401  | Unauthorized: No token was given|
+    | 401  | Unauthorized: No token was given or was expired |
     | 422  | Unprocessable Entity: Wrong format (email, password) or too many fields |
 
     Example `200` response
@@ -248,7 +248,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     |------|---------------------------|
     | 200  | OK: User Object               |
     | 404  | Not found: User not found (or it already deleted)           | 
-    | 401  | Unauthorized: no token was given   |
+    | 401  | Unauthorized: no token was given or was expired |
 
     Example `200` response
 
@@ -286,8 +286,54 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | Book Object list        |
-    | 422  | Bad request data        |
+    | 200  | Ok: Book Object list        |
+    | 422  | Unprocessable Entity: user id is not a mongo id |
+
+    Example `200` response (genre = Graphic Novel)
+
+    ```JSON
+    [
+        {
+            "_id": "66417c240bdd97693c133590",
+            "user": "66417c240bdd97693c133562",
+            "title": "Viriliter somniculosus velociter adulescens asperiores deserunt peior audeo apud textus.",
+            "author": "Lucia Spinka I",
+            "editorial": "Mayert LLC",
+            "genre": "Graphic Novel",
+            "pubDate": "1651-02-21T18:14:48.550Z",
+            "isDeleted": false,
+            "createdAt": "2024-05-13T02:34:12.928Z",
+            "updatedAt": "2024-05-13T02:34:12.928Z",
+            "__v": 0
+        },
+        {
+            "_id": "66417c240bdd97693c13359a",
+            "user": "66417c230bdd97693c13355a",
+            "title": "Cornu crudelis tamisium.",
+            "author": "Mable Renner",
+            "editorial": "Howell LLC",
+            "genre": "Graphic Novel",
+            "pubDate": "1658-06-28T15:10:51.354Z",
+            "isDeleted": false,
+            "createdAt": "2024-05-13T02:34:12.995Z",
+            "updatedAt": "2024-05-13T02:34:12.995Z",
+            "__v": 0
+        },
+        {
+            "_id": "66417c250bdd97693c1335a4",
+            "user": "66417c230bdd97693c13355a",
+            "title": "Accusator celo audeo dignissimos vomica coerceo tardus temporibus.",
+            "author": "Scott Farrell",
+            "editorial": "Schaefer, Frami and Nitzsche",
+            "genre": "Graphic Novel",
+            "pubDate": "1616-05-14T06:25:44.107Z",
+            "isDeleted": false,
+            "createdAt": "2024-05-13T02:34:13.226Z",
+            "updatedAt": "2024-05-13T02:34:13.226Z",
+            "__v": 0
+        }
+    ]
+    ```
     
 - `GET /book/:bookId` - :unlock: Get one book by id.
 
@@ -302,25 +348,25 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | Book Object list        |
-    | 422  | Bad request data        |
-    | 404  | Book not found          |
+    | 200  | Ok: Book Object        |
+    | 422  | Unprocessable Entity: Bad request data        |
+    | 404  | Not Found: Book not found          |
 
     Example response
 
     ```JSON
     {
-        "_id": "66400b5e258f2e3132bcd85d",
-        "user": "66400b5d258f2e3132bcd837",
-        "title": "Tractatus logico-philosophicus",
-        "author": "Ludwig Wittgenstein",
-        "editorial": "Trantow - Bernhard",
+        "_id": "66417c240bdd97693c133590",
+        "user": "66417c240bdd97693c133562",
+        "title": "Viriliter somniculosus velociter adulescens asperiores deserunt peior audeo apud textus.",
+        "author": "Lucia Spinka I",
+        "editorial": "Mayert LLC",
         "genre": "Graphic Novel",
-        "pubDate": "1611-03-14T16:43:46.191Z",
-        "isDeleted": true,
-        "createdAt": "2024-05-12T00:20:46.321Z",
-        "updatedAt": "2024-05-12T00:38:20.854Z",
-        "__v": 0s
+        "pubDate": "1651-02-21T18:14:48.550Z",
+        "isDeleted": false,
+        "createdAt": "2024-05-13T02:34:12.928Z",
+        "updatedAt": "2024-05-13T02:34:12.928Z",
+        "__v": 0
     }
     ```
 
@@ -333,15 +379,54 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | authToken      | headers (required) | AuthToken                 |
     | bookData       | body (required)    | Book Data                 |
 
+    Book Data schema (example)
+
+    ```JSON
+    {
+        "user": "66400b5d258f2e3132bcd837",
+        "title": "Tractatus logico-philosophicus",
+        "author": "Ludwig Wittgenstein",
+        "editorial": "Trantow - Bernhard",
+        "genre": "Graphic Novel",
+        "pubDate": "1611-03-14T16:43:46.191Z",
+    }
+    ```
+
     **Response**
 
     | Code | Description               |     
     |------|---------------------------|
-    | 200  | Book Object               |
-    | 422  | Bad request data          |
-    | 404  | User not found            | 
-    | 401  | Unauthorized (no token)   |
-    | 403  | Forbiden (wrong password) |
+    | 201  | Created: Book Object               |
+    | 401  | Unauthorized: no token was given or was expired   |
+    | 404  | Not Found: User not found            | 
+    | 422  | Unprocessable Entity: Bad request data          |
+
+    Example `201` Response
+
+    ```JSON
+    {
+        "user": {
+            "_id": "6641835965a4fb605dc28cf6",
+            "name": "Waldo",
+            "email": "TheOriginalWaldo@hotmail.com",
+            "password": "$2b$10$zZddId0o5WnfDj7fZYam..kw1aBRwT7Y48jm8oqsv6r9Hpnc4WZMi",
+            "isDeleted": false,
+            "createdAt": "2024-05-13T03:04:57.008Z",
+            "updatedAt": "2024-05-13T03:04:57.008Z",
+            "__v": 0
+        },
+        "title": "Tractatus logico-philosophicus",
+        "author": "Ludwig Wittgenstein",
+        "editorial": "Trantow - Bernhard",
+        "genre": "Graphic Novel",
+        "pubDate": "1611-03-14T16:43:46.191Z",
+        "isDeleted": false,
+        "_id": "6641838d9ccc0805a2879735",
+        "createdAt": "2024-05-13T03:05:49.505Z",
+        "updatedAt": "2024-05-13T03:05:49.505Z",
+        "__v": 0
+    }
+    ```
     
 - `PATCH /book/:bookId` - :lock: Update one book by id (auth required).
 
@@ -353,16 +438,42 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | bookId         | parms (required)   | Book id                   | 
     | bookData       | body (required)    | Book Data (partial)       |
 
+    Example 
+
+    ```JSON
+    {
+        "genre": "Philosophy"
+    }
+    ```
+
     **Response**
 
     | Code | Description               |     
     |------|---------------------------|
-    | 200  | Book Object               |
-    | 422  | Bad request data          |
-    | 404  | User not found            | 
-    | 404  | Book not found            | 
-    | 401  | Unauthorized (no token)   |
-    | 403  | Forbiden (wrong password) |
+    | 200  | Ok: Book Object               |
+    | 422  | Unprocessable Entity: Bad request data          |
+    | 404  | Not Found: User not found            | 
+    | 404  | Not Found: Book not found            | 
+    | 401  | Unauthorized: no token or expired   |
+    | 403  | Forbiden: wrong permissions |
+
+    Example `200` response 
+
+    ```JSON
+    {
+        "_id": "6641838d9ccc0805a2879735",
+        "user": "6641835965a4fb605dc28cf6",
+        "title": "Tractatus logico-philosophicus",
+        "author": "Ludwig Wittgenstein",
+        "editorial": "Trantow - Bernhard",
+        "genre": "Graphic Novel",
+        "pubDate": "1611-03-14T16:43:46.191Z",
+        "isDeleted": false,
+        "createdAt": "2024-05-13T03:05:49.505Z",
+        "updatedAt": "2024-05-13T03:05:49.505Z",
+        "__v": 0
+    }
+    ```
 
 - `DELETE /book/:bookId` - :lock: Delete one book by id (auth required).
 
@@ -377,12 +488,30 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description               |      
     |------|---------------------------|
-    | 200  | Book Object               |
-    | 422  | Bad request data          |
-    | 404  | User not found            | 
-    | 404  | Book not found            | 
-    | 401  | Unauthorized (no token)   |
-    | 403  | Forbiden (wrong password) |
+    | 200  | Ok: Book Object               |
+    | 422  | Unprocessable Entity: Bad request data          |
+    | 404  | Not found: User not found            | 
+    | 404  | Not found: Book not found            | 
+    | 401  | Unauthorized: no token or expired   |
+    | 403  | Forbiden: 403 Forbidden |
+
+    Example `200` response 
+
+    ```JSON 
+    {
+        "_id": "6641838d9ccc0805a2879735",
+        "user": "6641835965a4fb605dc28cf6",
+        "title": "Tractatus logico-philosophicus",
+        "author": "Ludwig Wittgenstein",
+        "editorial": "Trantow - Bernhard",
+        "genre": "Philosophy",
+        "pubDate": "1611-03-14T16:43:46.191Z",
+        "isDeleted": false,
+        "createdAt": "2024-05-13T03:05:49.505Z",
+        "updatedAt": "2024-05-13T03:09:09.693Z",
+        "__v": 0
+    }
+    ```
 
 ### Orders
 
@@ -517,14 +646,9 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     - [ ] Loggers.
     - [ ] string sanitization?
     - [ ] Docker.
+
 ## Authors
 
 <a href="https://github.com/sonya-c/booklingo/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=sonya-c/booklingo" />
 </a>
-
-<!-- ## Acknowledgments
-
-Inspiration:
-
-- [RESTful API Node Server Boilerplate](https://github.com/hagopj13/node-express-boilerplate/tree/master) -->

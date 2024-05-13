@@ -1,7 +1,7 @@
 const express = require('express');
 
 const bookController = require('../controllers/book.controller');
-const { bookValidation, commonValitations } = require('../utils/validations');
+const bookValidation = require('../validations/book.validation');
 
 const auth = require('../middlewares/auth');
 const validate = require('../middlewares/validate');
@@ -12,14 +12,14 @@ const router = express.Router();
 // Get all users. Optional filters: genre, pubDate (range), editorial, author adn title 
 router.get(
     "/",
-    [commonValitations.showDeleted, bookValidation.findBook, validate],
+    [bookValidation.showDeleted, bookValidation.findBook, validate],
     catchError(bookController.findBooks)
 );
 
 // Get one book by id 
 router.get(
     "/:bookId",
-    [commonValitations.showDeleted, bookValidation.bookId, validate],
+    [bookValidation.showDeleted, bookValidation.bookId, validate],
     catchError(bookController.findBookById)
 );
 

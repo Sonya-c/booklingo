@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
     jwt.verify(token, SECRET, (err, decodeToken) => {
 
         if (err) // Token expire or not matching user, return error 
-            throw new AppError("Wrong Password", status.FORBIDDEN);
+            throw new AppError("Expire token", status.UNAUTHORIZED);
 
         req.decodeToken = decodeToken;
 
