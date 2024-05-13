@@ -84,9 +84,9 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description                                     |     
     |------|-------------------------------------------------|
-    | <span style="color: lime">201</span>  | Created. Return an user object and anauthToken  |
-    | <span style="color: crimson">409</span>  | Conflict: User with given email already exists |
-    | <span style="color: crimson">422</span>  | Unprocessable Entity: missing values, too many values, wrong values |
+    | 201  | Created. Return an user object and anauthToken  |
+    | 409  | Conflict: User with given email already exists |
+    | 422  | Unprocessable Entity: missing values, too many values, wrong values |
     
 
     Example `201` response
@@ -94,15 +94,16 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     ```JSON
     {
         "user": {
+            "name": "Waldo",
             "email": "TheOriginalWaldo@hotmail.com",
-            "password": "$2b$10$om81eVXnktgelvMjndxY7OVZkfAoffH27E6EWQnIGnzMKvZy2SX/.",
+            "password": "$2b$10$PmNlTkdbJtuvo5hPErAOxupeYz7pefpeZGe8UlSas9nGZIMCm1gFC",
             "isDeleted": false,
-            "_id": "66415b6ad2edf6e1ae25e589",
-            "createdAt": "2024-05-13T00:14:34.951Z",
-            "updatedAt": "2024-05-13T00:14:34.951Z",
+            "_id": "66416be26ddf0ea93bf759c0",
+            "createdAt": "2024-05-13T01:24:50.866Z",
+            "updatedAt": "2024-05-13T01:24:50.866Z",
             "__v": 0
         },
-        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQxNWI2YWQyZWRmNmUxYWUyNWU1ODkiLCJpYXQiOjE3MTU1NTkyNzUsImV4cCI6MTcxNTU2Mjg3NX0.g_DYPFw4DSRn-4nbmKagm0R-cs72lZ4gBOqGGYXkTag"
+        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQxNmJlMjZkZGYwZWE5M2JmNzU5YzAiLCJpYXQiOjE3MTU1NjM0OTEsImV4cCI6MTcxNTU2NzA5MX0.ofUddeeIWpkAD2VJwPrUazAbpywviC_KkrklWSIaPxE"
     }
     ```
 
@@ -127,25 +128,26 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description                    |     
     |------|--------------------------------|
-    | <span style="color: lime">200</span>  | Ok: User Object and auth Token |
-    | <span style="color: crimson">401</span>   | Unauthorized: Wrong password             |
-    | <span style="color: crimson">404</span>  | Not found: User dosen't exist         |
-    | <span style="color: crimson">422</span>   | Unprocessable Entity: Missing values, bad format, extra values           |
+    | 200  | Ok: User Object and auth Token |
+    | 401   | Unauthorized: Wrong password             |
+    | 404  | Not found: User dosen't exist         |
+    | 422   | Unprocessable Entity: Missing values, bad format, extra values           |
     
     Example `200` response
 
     ```JSON
     {
         "user": {
-            "_id": "66415b6ad2edf6e1ae25e589",
+            "_id": "66416be26ddf0ea93bf759c0",
+            "name": "Waldo",
             "email": "TheOriginalWaldo@hotmail.com",
-            "password": "$2b$10$om81eVXnktgelvMjndxY7OVZkfAoffH27E6EWQnIGnzMKvZy2SX/.",
+            "password": "$2b$10$PmNlTkdbJtuvo5hPErAOxupeYz7pefpeZGe8UlSas9nGZIMCm1gFC",
             "isDeleted": false,
-            "createdAt": "2024-05-13T00:14:34.951Z",
-            "updatedAt": "2024-05-13T00:14:34.951Z",
+            "createdAt": "2024-05-13T01:24:50.866Z",
+            "updatedAt": "2024-05-13T01:24:50.866Z",
             "__v": 0
         },
-        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQxNWI2YWQyZWRmNmUxYWUyNWU1ODkiLCJpYXQiOjE3MTU1NTk5NjMsImV4cCI6MTcxNTU2MzU2M30.B87Sbode0-OChop2c89XkDYkuj2ty9RZId6YALT1uRo"
+        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQxNmJlMjZkZGYwZWE5M2JmNzU5YzAiLCJpYXQiOjE3MTU1NjM1NjAsImV4cCI6MTcxNTU2NzE2MH0.onWE9-YZPGlTB6Gdq3_Dyhj9r9DyMYsPCHHAmx5U8PM"
     }
     ```
 
@@ -179,11 +181,11 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | User Object             |
-    | 404  | User not found          | 
-    | 422  | Bad request data        |
+    | 200  | OK: User Object             |
+    | 404  | Not found: User not found          | 
+    | 422  | Unprocessable Entity: userId is not a mongo id object       |
 
-    Example response
+    Example `200` response
 
     ```JSON
     {
@@ -211,11 +213,25 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description               |     
     |------|---------------------------|
-    | 200  | User Object (before)      |
-    | 404  | User not found            | 
-    | 401  | Unauthorized (no token)   |
-    | 403  | Forbiden (wrong password) |
+    | 200  | OK: User Object (before)  |
+    | 404  | Not found: User not found (or user was deleted) | 
+    | 401  | Unauthorized: No token was given|
+    | 422  | Unprocessable Entity: Wrong format (email, password) or too many fields |
 
+    Example `200` response
+
+    ```JSON 
+    {
+        "_id": "66416be26ddf0ea93bf759c0",
+        "name": "Waldo",
+        "email": "TheOriginalWaldo@hotmail.com",
+        "password": "$2b$10$PmNlTkdbJtuvo5hPErAOxupeYz7pefpeZGe8UlSas9nGZIMCm1gFC",
+        "isDeleted": false,
+        "createdAt": "2024-05-13T01:24:50.866Z",
+        "updatedAt": "2024-05-13T01:24:50.866Z",
+        "__v": 0
+        }
+    ```  
 
 - `DELETE /user/:userId` - :lock: Delete one user by id (auth required).
 
@@ -230,11 +246,24 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description               |     
     |------|---------------------------|
-    | 200  | User Object               |
-    | 404  | User not found            | 
-    | 401  | Unauthorized (no token)   |
-    | 403  | Forbiden (wrong password) |
+    | 200  | OK: User Object               |
+    | 404  | Not found: User not found (or it already deleted)           | 
+    | 401  | Unauthorized: no token was given   |
 
+    Example `200` response
+
+    ```JSON
+    {
+        "_id": "66416be26ddf0ea93bf759c0",
+        "name": "Waldo the og",
+        "email": "TheOriginalWaldo@hotmail.com",
+        "password": "$2b$10$PmNlTkdbJtuvo5hPErAOxupeYz7pefpeZGe8UlSas9nGZIMCm1gFC",
+        "isDeleted": false,
+        "createdAt": "2024-05-13T01:24:50.866Z",
+        "updatedAt": "2024-05-13T01:28:35.473Z",
+        "__v": 0
+    }
+    ```
 
 ### Books
 
@@ -479,14 +508,15 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     - [-] Get all order (filter by status, creation date).
     - [x] Get order by id.
 
-- Other/Not sure.
+- Extras.
+
     - [X] Get books of one user.
     - [x] Extra query: show deleted items.
     - [x] When getting orders, should auth be required?
     - [x] When getting an order by id, should auth be required?
-    - [ ] When getting a order, and extra query for send order and recived orders?
-    - [ ] When getting the books of a user, it should be on book route or user route?
-
+    - [ ] Loggers.
+    - [ ] string sanitization?
+    - [ ] Docker.
 ## Authors
 
 <a href="https://github.com/sonya-c/booklingo/graphs/contributors">

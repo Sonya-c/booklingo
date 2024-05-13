@@ -1,11 +1,15 @@
 
 const status = require('http-status');
 
+const logger = require('../utils/logger');
 const AppError = require('../utils/AppError');
+
 const userService = require('../services/user.service');
 
 const getAllUsers = async (req, res) => {
     const { showDeleted } = req.query;
+
+    logger.info(`userController.getAllUsers | showDeleted = ${showDeleted}`);
 
     const users = await userService.findAllUser(showDeleted);
 
