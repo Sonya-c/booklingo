@@ -1,6 +1,8 @@
 const status = require('http-status');
 const jwt = require('jsonwebtoken');
 
+const AppError = require('../utils/AppError');
+
 const SECRET = process.env.JWT_SECRET;
 
 const auth = async (req, res, next) => {
@@ -8,11 +10,13 @@ const auth = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    if (token == null) return res.sendStatus(status.UNAUTHORIZED); // No token, return error 
+    if (token == null) // No token, return error 
+        throw new AppError("AuthToken is required", status.UNAUTHORIZED);
 
     jwt.verify(token, SECRET, (err, decodeToken) => {
 
-        if (err) return res.sendStatus(status.FORBIDDEN); // Token expire or not matching user, return error 
+        if (err) // Token expire or not matching user, return error 
+            throw new AppError("Wrong Password", status.FORBIDDEN);
 
         req.decodeToken = decodeToken;
 
