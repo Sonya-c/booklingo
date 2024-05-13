@@ -62,7 +62,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ### Authentication
 
-- `POST /auth/register` - :key: Create a new user.
+-  `POST /auth/register` - :key: Create a new user.
 
     **Parameters**
 
@@ -74,7 +74,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     ```JSON
     {
-        "name": "Waldo", // name is optional
+        "name": "Waldo",
         "email": "TheOriginalWaldo@hotmail.com",
         "password": "raMGvnui"
     }
@@ -84,25 +84,25 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description                                     |     
     |------|-------------------------------------------------|
-    | 200  | Object (user: user model, authToken: jwt token) |
-    | 422  | Bad request data                                |
-    | 409  | Conflict - User with given email already exists |
+    | <span style="color: lime">201</span>  | Created. Return an user object and anauthToken  |
+    | <span style="color: crimson">409</span>  | Conflict: User with given email already exists |
+    | <span style="color: crimson">422</span>  | Unprocessable Entity: missing values, too many values, wrong values |
+    
 
-    Example response
+    Example `201` response
 
     ```JSON
     {
         "user": {
-            "_id": "66400b5d258f2e3132bcd837",
-            "name": "Kelvin Leffler",
-            "email": "Lukas_Stark23@yahoo.com",
-            "password": "$2b$10$KNCmq.PCwx.J6ZhmjNX2yOZ5K7VSruCqHpdyaW514TEhmXYYxzkUK",
+            "email": "TheOriginalWaldo@hotmail.com",
+            "password": "$2b$10$om81eVXnktgelvMjndxY7OVZkfAoffH27E6EWQnIGnzMKvZy2SX/.",
             "isDeleted": false,
-            "createdAt": "2024-05-12T00:20:45.306Z",
-            "updatedAt": "2024-05-12T00:20:45.306Z",
+            "_id": "66415b6ad2edf6e1ae25e589",
+            "createdAt": "2024-05-13T00:14:34.951Z",
+            "updatedAt": "2024-05-13T00:14:34.951Z",
             "__v": 0
         },
-        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQwMGI1ZDI1OGYyZTMxMzJiY2Q4MzciLCJpYXQiOjE3MTU0NzYzMzQsImV4cCI6MTcxNTQ3OTkzNH0.iPgi_CHw9PbU-YqdcAKHoMkfzlAy7146zf7AjtaDlY4"
+        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQxNWI2YWQyZWRmNmUxYWUyNWU1ODkiLCJpYXQiOjE3MTU1NTkyNzUsImV4cCI6MTcxNTU2Mjg3NX0.g_DYPFw4DSRn-4nbmKagm0R-cs72lZ4gBOqGGYXkTag"
     }
     ```
 
@@ -112,7 +112,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Name        | Type             | Description                |
     |-------------|------------------|----------------------------|
-    | userData    | body (required)  | User data: email, password |
+    | userData    | body (required)  | User data: email and password |
 
     UserData schema (example)
 
@@ -125,28 +125,27 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     **Response**
 
-    | Code | Description                |     
-    |------|----------------------------|
-    | 200  | User Object and auth Token |
-    | 422  | Bad request data           |
-    | 404  | User dosen't exist         |
-    | 401  | Wrong password             |
+    | Code | Description                    |     
+    |------|--------------------------------|
+    | <span style="color: lime">200</span>  | Ok: User Object and auth Token |
+    | <span style="color: crimson">401</span>   | Unauthorized: Wrong password             |
+    | <span style="color: crimson">404</span>  | Not found: User dosen't exist         |
+    | <span style="color: crimson">422</span>   | Unprocessable Entity: Missing values, bad format, extra values           |
     
-    Example response
+    Example `200` response
 
     ```JSON
     {
         "user": {
-            "_id": "66400b5d258f2e3132bcd837",
-            "name": "Kelvin Leffler",
-            "email": "Lukas_Stark23@yahoo.com",
-            "password": "$2b$10$KNCmq.PCwx.J6ZhmjNX2yOZ5K7VSruCqHpdyaW514TEhmXYYxzkUK",
+            "_id": "66415b6ad2edf6e1ae25e589",
+            "email": "TheOriginalWaldo@hotmail.com",
+            "password": "$2b$10$om81eVXnktgelvMjndxY7OVZkfAoffH27E6EWQnIGnzMKvZy2SX/.",
             "isDeleted": false,
-            "createdAt": "2024-05-12T00:20:45.306Z",
-            "updatedAt": "2024-05-12T00:20:45.306Z",
+            "createdAt": "2024-05-13T00:14:34.951Z",
+            "updatedAt": "2024-05-13T00:14:34.951Z",
             "__v": 0
         },
-        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQwMGI1ZDI1OGYyZTMxMzJiY2Q4MzciLCJpYXQiOjE3MTU0NzYzMzQsImV4cCI6MTcxNTQ3OTkzNH0.iPgi_CHw9PbU-YqdcAKHoMkfzlAy7146zf7AjtaDlY4"
+        "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQxNWI2YWQyZWRmNmUxYWUyNWU1ODkiLCJpYXQiOjE3MTU1NTk5NjMsImV4cCI6MTcxNTU2MzU2M30.B87Sbode0-OChop2c89XkDYkuj2ty9RZId6YALT1uRo"
     }
     ```
 
