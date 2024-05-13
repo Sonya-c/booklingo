@@ -1,7 +1,7 @@
 const express = require('express');
 
 const orderController = require('../controllers/order.controller');
-const { orderValidation } = require('../utils/validations');
+const orderValidation = require('../validations/order.validations');
 
 const auth = require('../middlewares/auth');
 const validate = require('../middlewares/validate');
@@ -12,7 +12,7 @@ const router = express.Router();
 // Get all order and filter (should i filter by created/recived??)
 router.get(
     "/",
-    [catchError(auth)],
+    [orderValidation.findOrder, validate, catchError(auth)],
     catchError(orderController.findOrder)
 );
 
@@ -34,7 +34,7 @@ router.post(
 
 router.patch(
     "/:orderId/",
-    [orderValidation.orderId, validate, catchError(auth)],
+    [orderValidation.orderId, orderValidation.updateOrder, validate, catchError(auth)],
     catchError(orderController.updateOrderStatus)
 )
 

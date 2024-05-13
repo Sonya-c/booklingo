@@ -62,6 +62,11 @@ const findOrder = async (
     userRol = null,
 ) => {
 
+    const user = await userSerive.findUserbyId(userId);
+    // User not found
+    if (user == null)
+        throw new AppError(`User with userId '${userId}' dosen't exists`, status.NOT_FOUND);
+
     const filter = {};
 
     if (orderStatus)
@@ -85,7 +90,7 @@ const findOrder = async (
     }
 
     if (userRol)
-        filter[userRol === 'creator' ? 'orderCreator' : 'orderReceiver'] = userId;
+        filter[userRol] = userId;
     else
         filter.$or = [{ orderCreator: userId }, { orderReceiver: userId }];
 
@@ -103,6 +108,9 @@ const updateOrderStatus = async (orderId, userId, orderStatus) => {
     // Order not found
     if (order == null)
         throw new AppError(`Order with orderId '${orderId}' dosen't exists`, status.NOT_FOUND);
+
+    if (order.status == "COMPLETED" || order.status == "CANCELED")
+        throw new AppError(`Order with orderId '${orderId}' is already cancelled or completed. Can't modify`, status.UNPROCESSABLE_ENTITY);
 
     // The user should be either the order creator or the order reciver 
     if (!(user._id.equals(order.orderCreator) || user._id.equals(order.orderReceiver)))

@@ -9,7 +9,7 @@ const createOrder = async (req, res) => {
 
     const order = await orderService.createOrder(userId, booksId);
 
-    res.status(status.OK).send(order);
+    res.status(status.CREATED).send(order);
 }
 
 const findOrderById = async (req, res) => {

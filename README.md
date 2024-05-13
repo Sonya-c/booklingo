@@ -523,16 +523,19 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | Name          | Type              | Description               |
     |---------------|-------------------|---------------------------|
     | authToken     | header (required) |                           | 
-
+    | orderStatus   | query (optional)  | 'IN PROGRESS', 'COMPLETED' or 'CANCELLED' |
+    | startPubDate  | query (optional)  ||
+    | endPubDate    | query (optional)  ||
+    | userRol       | qyery (optional)  | 'orderCreator' or 'orderReceiver' |
 
     **Response**
 
     | Code | Description               |     
     |------|---------------------------|
-    | 200  | Order Object              |
-    | 404  | Order not found           | 
-    | 401  | Unauthorized (no token)   |
-    | 403  | Forbiden (wrong password) |
+    | 200  | Ok: Order Object              |
+    | 422  | Unprocessable Entity | 
+    | 404  | Not found: user not found | 
+    | 401  | Unauthorized: no token or expire   |
 
 
 - `GET /order/:orderId` - :lock: Get one order by id.
@@ -548,12 +551,31 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     | Code | Description             |     
     |------|-------------------------|
-    | 200  | Order Object            |
-    | 404  | Order not found         | 
-    | 404  | User not found         | 
-    | 401  | Unauthorized (no token)   |
-    | 403  | Forbiden (wrong password) |
-    | 403  | Forbiden (you are neither order creator nor order reciver) |
+    | 200  | Ok: Order Object            |
+    | 404  | Not Found: Order not found         | 
+    | 404  | Not Found: User not found         | 
+    | 401  | Unauthorized: no token or expired   |
+    | 403  | Forbiden: you are neither order creator nor order reciver |
+    | 422  | Unprocessable Entity: Order id is not an id |
+
+    Example `200` reponse 
+
+    ```JSON
+    {
+        "_id": "664188139ccc0805a2879758",
+        "orderCreator": "6641835965a4fb605dc28cf6",
+        "orderReceiver": "664181a28799402bcab6039c",
+        "status": "IN PROGRESS",
+        "books": [
+            "664181a38799402bcab603c8",
+            "664181a38799402bcab603cc",
+            "664181a38799402bcab603e8"
+        ],
+        "createdAt": "2024-05-13T03:25:07.063Z",
+        "updatedAt": "2024-05-13T03:25:07.063Z",
+        "__v": 0
+    }
+    ```
 
 - `POST /order` - :lock: Create a order.
     
@@ -566,17 +588,103 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
     Note: all books should have the same owner. Otherwise, a `422` will happen.
 
+    Example request 
+
+    ```JSON 
+    {
+        "books": [
+            "664181a38799402bcab603c8",
+            "664181a38799402bcab603cc",
+            "664181a38799402bcab603e8"
+        ]
+    }
+    ```
+
     **Response**
 
     | Code | Description                    |     
     |------|--------------------------------|
-    | 200  | Order Object                   |
-    | 422  | Bad request data               |
-    | 404  | User (orderCreator) not found  | 
-    | 404  | User (orderReceiver) not found | 
-    | 404  | Book not found                 | 
-    | 401  | Unauthorized (no token)        |
-    | 403  | Forbiden (wrong password)      |
+    | 201  | Create: Order Object                   |
+    | 422  | Unprocessable Entity: Bad request data (All id should be books ids and from the same owner) |
+    | 404  | Not found: User (orderCreator) not found  | 
+    | 404  | Not found: User (orderReceiver) not found | 
+    | 404  | Not found: Book not found                 | 
+    | 401  | Unauthorized: no token or expire        |
+
+
+    Example `201` response 
+
+    ```JSON
+    {
+        "orderCreator": {
+            "_id": "6641835965a4fb605dc28cf6",
+            "name": "Waldo",
+            "email": "TheOriginalWaldo@hotmail.com",
+            "password": "$2b$10$zZddId0o5WnfDj7fZYam..kw1aBRwT7Y48jm8oqsv6r9Hpnc4WZMi",
+            "isDeleted": false,
+            "createdAt": "2024-05-13T03:04:57.008Z",
+            "updatedAt": "2024-05-13T03:04:57.008Z",
+            "__v": 0
+        },
+        "orderReceiver": {
+            "_id": "664181a28799402bcab6039c",
+            "name": "Sonya Crooks V",
+            "email": "Shanel.Boehm18@hotmail.com",
+            "password": "$2b$10$APw4h5Y6SlGla2mXSnGMDesDFy8FA0R1Hwnn4Y2yuhgaV9kqKJgOy",
+            "isDeleted": false,
+            "createdAt": "2024-05-13T02:57:38.013Z",
+            "updatedAt": "2024-05-13T02:57:38.013Z",
+            "__v": 0
+        },
+        "status": "IN PROGRESS",
+        "books": [
+            {
+                "_id": "664181a38799402bcab603c8",
+                "user": "664181a28799402bcab6039c",
+                "title": "Tabgo aestivus omnis aestivus avarus cavus vinum texo cumque contabesco.",
+                "author": "Bryant Bahringer",
+                "editorial": "Batz - Sporer",
+                "genre": "Fantasy",
+                "pubDate": "1553-12-04T01:26:14.375Z",
+                "isDeleted": false,
+                "createdAt": "2024-05-13T02:57:39.218Z",
+                "updatedAt": "2024-05-13T02:57:39.218Z",
+                "__v": 0
+            },
+            {
+                "_id": "664181a38799402bcab603cc",
+                "user": "664181a28799402bcab6039c",
+                "title": "Suffragium censura talis tabula tempus vociferor.",
+                "author": "Nick Schamberger",
+                "editorial": "Tillman, Flatley and Glover",
+                "genre": "Thriller",
+                "pubDate": "1541-12-26T07:36:32.790Z",
+                "isDeleted": false,
+                "createdAt": "2024-05-13T02:57:39.226Z",
+                "updatedAt": "2024-05-13T02:57:39.226Z",
+                "__v": 0
+            },
+            {
+                "_id": "664181a38799402bcab603e8",
+                "user": "664181a28799402bcab6039c",
+                "title": "Tondeo adversus delicate campana depereo audio magnam virtus.",
+                "author": "Tonya Toy",
+                "editorial": "Corkery Group",
+                "genre": "Graphic Novel",
+                "pubDate": "1645-11-27T06:03:13.551Z",
+                "isDeleted": false,
+                "createdAt": "2024-05-13T02:57:39.589Z",
+                "updatedAt": "2024-05-13T02:57:39.589Z",
+                "__v": 0
+            }
+        ],
+        "_id": "664188139ccc0805a2879758",
+        "createdAt": "2024-05-13T03:25:07.063Z",
+        "updatedAt": "2024-05-13T03:25:07.063Z",
+        "__v": 0
+    }
+    ```
+
 
 - `PATCH /order/:orderId` - :lock: Update an order status.
 
@@ -585,21 +693,20 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
     | Name           | Type               | Description               |
     |----------------|--------------------|---------------------------|
     | authToken      | headers (required) | AuthToken                 |
-    | booId          | parms (required)   | Book Id                   |
+    | orderId          | parms (required)   | Order Id                   |
     | status         | body (required)    | "CANCELED" or "COMPLETED". The user creator only can cancel an order. The user reciver can both canceled and mark as complete an order. |
     
     **Response**
 
     | Code | Description                    |     
     |------|--------------------------------|
-    | 200  | Order Object                   |
-    | 422  | Bad request data               |
-    | 404  | User not found                 | 
-    | 404  | Book not found                 | 
-    | 401  | Unauthorized (no token)        |
-    | 403  | Forbiden (wrong password, nor creator nor reciver) |
+    | 200  | OK: Order Object                   |
+    | 404  | Not found: User not found                 | 
+    | 404  | Not found: Book not found (ex. Book was deleted or sold )                 | 
+    | 401  | Unauthorized: no token or expired        |
+    | 403  | Forbiden: nor creator nor reciver, or wrong permmision |
+    | 422  | Unprocessable Entity: order Id is not a id ot status is missing or wrong. Or order is already cancelled or completed. |
 
-- `DELETE /order/:orderId` - :lock: "Delete" an order.
 
 ## Constraints
 
