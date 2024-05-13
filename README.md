@@ -60,6 +60,8 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
 
 ## Endpoints 
 
+You can import the [postman collection](Booklingo.postman_collection.json). 
+
 ### Authentication
 
 -  `POST /auth/register` - :key: Create a new user.
