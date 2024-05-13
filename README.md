@@ -230,7 +230,7 @@ This script use the [faker.js](https://github.com/faker-js/faker) library and a 
         "createdAt": "2024-05-13T01:24:50.866Z",
         "updatedAt": "2024-05-13T01:24:50.866Z",
         "__v": 0
-        }
+    }
     ```  
 
 - `DELETE /user/:userId` - :lock: Delete one user by id (auth required).
